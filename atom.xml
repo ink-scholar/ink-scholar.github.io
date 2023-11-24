@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-11-24T07:43:33.208Z</updated>
+  <updated>2023-11-24T07:47:21.829Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>某</title>
     <link href="http://example.com/2023/11/24/1/"/>
     <id>http://example.com/2023/11/24/1/</id>
     <published>2023-11-24T07:43:25.995Z</published>
-    <updated>2023-11-24T07:43:33.208Z</updated>
+    <updated>2023-11-24T07:47:21.829Z</updated>
     
     <content type="html"><![CDATA[<p>是江东父老示范基地</p>]]></content>
     
@@ -34,6 +34,12 @@
     
     
     
+    <category term="渗透" scheme="http://example.com/categories/%E6%B8%97%E9%80%8F/"/>
+    
+    
+    <category term="pdf" scheme="http://example.com/tags/pdf/"/>
+    
+    <category term="p" scheme="http://example.com/tags/p/"/>
     
   </entry>
   

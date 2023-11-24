@@ -3,11 +3,11 @@
   <title>Hexo</title>
   
   
-  <link href="http://example.com/atom.xml" rel="self"/>
+  <link href="https://ink-scholar.github.io/blog/atom.xml" rel="self"/>
   
-  <link href="http://example.com/"/>
+  <link href="https://ink-scholar.github.io/blog/"/>
   <updated>2023-11-24T12:12:25.843Z</updated>
-  <id>http://example.com/</id>
+  <id>https://ink-scholar.github.io/blog/</id>
   
   <author>
     <name>John Doe</name>
@@ -18,33 +18,33 @@
   
   <entry>
     <title>test</title>
-    <link href="http://example.com/2023/11/24/note/"/>
-    <id>http://example.com/2023/11/24/note/</id>
+    <link href="https://ink-scholar.github.io/blog/2023/11/24/note/"/>
+    <id>https://ink-scholar.github.io/blog/2023/11/24/note/</id>
     <published>2023-11-24T11:32:38.074Z</published>
     <updated>2023-11-24T12:12:25.843Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="/.com//1.png"></p>]]></content>
+    <content type="html"><![CDATA[<p><img src="/blog/.io//1.png"></p>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/.com//1.png&quot;&gt;&lt;/p&gt;
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;/blog/.io//1.png&quot;&gt;&lt;/p&gt;
 </summary>
       
     
     
     
-    <category term="渗透" scheme="http://example.com/categories/%E6%B8%97%E9%80%8F/"/>
+    <category term="渗透" scheme="https://ink-scholar.github.io/blog/categories/%E6%B8%97%E9%80%8F/"/>
     
     
-    <category term="pdf" scheme="http://example.com/tags/pdf/"/>
+    <category term="pdf" scheme="https://ink-scholar.github.io/blog/tags/pdf/"/>
     
   </entry>
   
   <entry>
     <title>某</title>
-    <link href="http://example.com/2023/11/24/1/"/>
-    <id>http://example.com/2023/11/24/1/</id>
+    <link href="https://ink-scholar.github.io/blog/2023/11/24/1/"/>
+    <id>https://ink-scholar.github.io/blog/2023/11/24/1/</id>
     <published>2023-11-24T07:43:25.995Z</published>
     <updated>2023-11-24T07:47:21.829Z</updated>
     
@@ -59,12 +59,12 @@
     
     
     
-    <category term="渗透" scheme="http://example.com/categories/%E6%B8%97%E9%80%8F/"/>
+    <category term="渗透" scheme="https://ink-scholar.github.io/blog/categories/%E6%B8%97%E9%80%8F/"/>
     
     
-    <category term="pdf" scheme="http://example.com/tags/pdf/"/>
+    <category term="pdf" scheme="https://ink-scholar.github.io/blog/tags/pdf/"/>
     
-    <category term="p" scheme="http://example.com/tags/p/"/>
+    <category term="p" scheme="https://ink-scholar.github.io/blog/tags/p/"/>
     
   </entry>
   

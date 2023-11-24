@@ -1,3 +1,4 @@
+http://www.example.com/2023/11/24/qwe/
 http://www.example.com/2023/11/24/note/
 http://www.example.com/2023/11/24/1/
 http://www.example.com/404.html

@@ -74,7 +74,7 @@
   </url>
   
   <url>
-    <loc>http://www.example.com/tags/index.html</loc>
+    <loc>http://www.example.com/repository/index.html</loc>
     
     <lastmod>2022-03-21</lastmod>
     
@@ -83,7 +83,7 @@
   </url>
   
   <url>
-    <loc>http://www.example.com/repository/index.html</loc>
+    <loc>http://www.example.com/tags/index.html</loc>
     
     <lastmod>2022-03-21</lastmod>
     

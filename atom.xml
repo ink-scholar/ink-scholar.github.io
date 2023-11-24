@@ -6,7 +6,7 @@
   <link href="http://www.example.com/atom.xml" rel="self"/>
   
   <link href="http://www.example.com/"/>
-  <updated>2023-11-24T12:59:45.423Z</updated>
+  <updated>2023-11-24T13:03:33.402Z</updated>
   <id>http://www.example.com/</id>
   
   <author>
@@ -21,39 +21,14 @@
     <link href="http://www.example.com/2023/11/24/qwe/"/>
     <id>http://www.example.com/2023/11/24/qwe/</id>
     <published>2023-11-24T12:58:59.840Z</published>
-    <updated>2023-11-24T12:59:45.423Z</updated>
+    <updated>2023-11-24T13:03:33.402Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="/.com//1.png"></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/.com//1.png&quot;&gt;&lt;/p&gt;
-</summary>
-      
-    
-    
-    
-    <category term="渗透" scheme="http://www.example.com/categories/%E6%B8%97%E9%80%8F/"/>
-    
-    
-    <category term="pdf" scheme="http://www.example.com/tags/pdf/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>test</title>
-    <link href="http://www.example.com/2023/11/24/note/"/>
-    <id>http://www.example.com/2023/11/24/note/</id>
-    <published>2023-11-24T11:32:38.074Z</published>
-    <updated>2023-11-24T12:12:25.843Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="/.com//1.png"></p>]]></content>
+    <content type="html"><![CDATA[<img src="/.com//11/24/qwe/1.png" class title="This is an image">]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/.com//1.png&quot;&gt;&lt;/p&gt;
+    <summary type="html">&lt;img src=&quot;/.com//11/24/qwe/1.png&quot; class title=&quot;This is an image&quot;&gt;
 </summary>
       
     

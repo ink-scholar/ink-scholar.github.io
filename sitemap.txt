@@ -1,13 +1,13 @@
-http://www.example.com/2023/11/24/asd/
 http://www.example.com/2023/11/24/qwe/
+http://www.example.com/2023/11/24/asd/
 http://www.example.com/2023/11/24/1/
 http://www.example.com/404.html
 http://www.example.com/about/index.html
 http://www.example.com/books/index.html
 http://www.example.com/categories/index.html
 http://www.example.com/links/index.html
-http://www.example.com/repository/index.html
 http://www.example.com/tags/index.html
+http://www.example.com/repository/index.html
 http://www.example.com/
 http://www.example.com/tags/pdf/
 http://www.example.com/tags/p/

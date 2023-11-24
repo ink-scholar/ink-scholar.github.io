@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2023-11-24T11:35:36.008Z</updated>
+  <updated>2023-11-24T11:47:56.677Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,14 +21,14 @@
     <link href="http://example.com/2023/11/24/note/"/>
     <id>http://example.com/2023/11/24/note/</id>
     <published>2023-11-24T11:32:38.074Z</published>
-    <updated>2023-11-24T11:35:36.008Z</updated>
+    <updated>2023-11-24T11:47:56.677Z</updated>
     
-    <content type="html"><![CDATA[<p>![[Pasted image 20231124193307.png]]</p>]]></content>
+    <content type="html"><![CDATA[<p>![](Pasted image 20231124193307.png)</p>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;![[Pasted image 20231124193307.png]]&lt;/p&gt;
+    <summary type="html">&lt;p&gt;![](Pasted image 20231124193307.png)&lt;/p&gt;
 </summary>
       
     

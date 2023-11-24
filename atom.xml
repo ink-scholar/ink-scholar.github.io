@@ -6,7 +6,7 @@
   <link href="http://www.example.com/atom.xml" rel="self"/>
   
   <link href="http://www.example.com/"/>
-  <updated>2023-11-24T13:18:39.247Z</updated>
+  <updated>2023-11-24T13:21:19.856Z</updated>
   <id>http://www.example.com/</id>
   
   <author>
@@ -20,8 +20,8 @@
     <title>asd</title>
     <link href="http://www.example.com/2023/11/24/asd/"/>
     <id>http://www.example.com/2023/11/24/asd/</id>
-    <published>2023-11-24T13:12:12.000Z</published>
-    <updated>2023-11-24T13:18:39.247Z</updated>
+    <published>2023-11-24T13:12:12.413Z</published>
+    <updated>2023-11-24T13:21:19.856Z</updated>
     
     <content type="html"><![CDATA[<p>Dsfsdfdsf</p><p>![[2.png]]</p>]]></content>
     
@@ -35,6 +35,10 @@
     
     
     
+    <category term="渗透" scheme="http://www.example.com/categories/%E6%B8%97%E9%80%8F/"/>
+    
+    
+    <category term="pdf" scheme="http://www.example.com/tags/pdf/"/>
     
   </entry>
   

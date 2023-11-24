@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://ink-scholar.github.io/blog/2023/11/24/note/</loc>
+    <loc>http://www.example.com/2023/11/24/note/</loc>
     
     <lastmod>2023-11-24</lastmod>
     
@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/blog/2023/11/24/1/</loc>
+    <loc>http://www.example.com/2023/11/24/1/</loc>
     
     <lastmod>2023-11-24</lastmod>
     
@@ -20,7 +20,7 @@
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/blog/404.html</loc>
+    <loc>http://www.example.com/404.html</loc>
     
     <lastmod>2022-03-21</lastmod>
     
@@ -29,7 +29,7 @@
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/blog/books/index.html</loc>
+    <loc>http://www.example.com/books/index.html</loc>
     
     <lastmod>2022-03-21</lastmod>
     
@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/blog/about/index.html</loc>
+    <loc>http://www.example.com/about/index.html</loc>
     
     <lastmod>2022-03-21</lastmod>
     
@@ -47,7 +47,7 @@
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/blog/categories/index.html</loc>
+    <loc>http://www.example.com/categories/index.html</loc>
     
     <lastmod>2022-03-21</lastmod>
     
@@ -56,7 +56,7 @@
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/blog/links/index.html</loc>
+    <loc>http://www.example.com/links/index.html</loc>
     
     <lastmod>2022-03-21</lastmod>
     
@@ -65,7 +65,7 @@
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/blog/repository/index.html</loc>
+    <loc>http://www.example.com/tags/index.html</loc>
     
     <lastmod>2022-03-21</lastmod>
     
@@ -74,7 +74,7 @@
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/blog/tags/index.html</loc>
+    <loc>http://www.example.com/repository/index.html</loc>
     
     <lastmod>2022-03-21</lastmod>
     
@@ -84,7 +84,7 @@
   
 
   <url>
-    <loc>https://ink-scholar.github.io/blog</loc>
+    <loc>http://www.example.com/</loc>
     <lastmod>2023-11-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -92,14 +92,14 @@
 
   
   <url>
-    <loc>https://ink-scholar.github.io/blog/tags/pdf/</loc>
+    <loc>http://www.example.com/tags/pdf/</loc>
     <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/blog/tags/p/</loc>
+    <loc>http://www.example.com/tags/p/</loc>
     <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -108,7 +108,7 @@
 
   
   <url>
-    <loc>https://ink-scholar.github.io/blog/categories/%E6%B8%97%E9%80%8F/</loc>
+    <loc>http://www.example.com/categories/%E6%B8%97%E9%80%8F/</loc>
     <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

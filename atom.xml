@@ -47,7 +47,7 @@
     <link href="https://ink-scholar.github.io/2023/11/24/qwe/"/>
     <id>https://ink-scholar.github.io/2023/11/24/qwe/</id>
     <published>2023-11-24T12:58:59.840Z</published>
-    <updated>2023-11-26T13:52:30.491Z</updated>
+    <updated>2023-11-26T16:00:40.987Z</updated>
     
     <content type="html"><![CDATA[<p><img src="/2023/11/24/qwe/1.png"></p>]]></content>
     
@@ -60,7 +60,9 @@
     
     
     
-    <category term="渗透" scheme="https://ink-scholar.github.io/categories/%E6%B8%97%E9%80%8F/"/>
+    <category term="CTF" scheme="https://ink-scholar.github.io/categories/CTF/"/>
+    
+    <category term="内网" scheme="https://ink-scholar.github.io/categories/CTF/%E5%86%85%E7%BD%91/"/>
     
     
     <category term="pdf" scheme="https://ink-scholar.github.io/tags/pdf/"/>

@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://ink-scholar.github.io/2023/11/24/qwe/</loc>
+    <loc>https://ink-scholar.github.io/2023/11/24/123/</loc>
     
     <lastmod>2023-11-26</lastmod>
     
@@ -74,7 +74,7 @@
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/tags/index.html</loc>
+    <loc>https://ink-scholar.github.io/repository/index.html</loc>
     
     <lastmod>2022-03-21</lastmod>
     
@@ -83,7 +83,7 @@
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/repository/index.html</loc>
+    <loc>https://ink-scholar.github.io/tags/index.html</loc>
     
     <lastmod>2022-03-21</lastmod>
     
@@ -124,14 +124,14 @@
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/categories/%E6%B8%97%E9%80%8F/</loc>
+    <loc>https://ink-scholar.github.io/categories/CTF/</loc>
     <lastmod>2023-11-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/categories/CTF/</loc>
+    <loc>https://ink-scholar.github.io/categories/%E6%B8%97%E9%80%8F/</loc>
     <lastmod>2023-11-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

@@ -6,8 +6,8 @@ https://ink-scholar.github.io/about/index.html
 https://ink-scholar.github.io/books/index.html
 https://ink-scholar.github.io/categories/index.html
 https://ink-scholar.github.io/links/index.html
-https://ink-scholar.github.io/repository/index.html
 https://ink-scholar.github.io/tags/index.html
+https://ink-scholar.github.io/repository/index.html
 https://ink-scholar.github.io/
 https://ink-scholar.github.io/tags/pdf/
 https://ink-scholar.github.io/tags/p/

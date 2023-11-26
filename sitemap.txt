@@ -2,8 +2,8 @@ https://ink-scholar.github.io/2023/11/24/123/
 https://ink-scholar.github.io/2023/11/24/1/
 https://ink-scholar.github.io/2023/11/24/asd/
 https://ink-scholar.github.io/404.html
-https://ink-scholar.github.io/about/index.html
 https://ink-scholar.github.io/books/index.html
+https://ink-scholar.github.io/about/index.html
 https://ink-scholar.github.io/categories/index.html
 https://ink-scholar.github.io/links/index.html
 https://ink-scholar.github.io/repository/index.html

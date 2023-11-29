@@ -4,7 +4,7 @@
   <url>
     <loc>https://ink-scholar.github.io/2023/11/24/123/</loc>
     
-    <lastmod>2023-11-26</lastmod>
+    <lastmod>2023-11-29</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -13,7 +13,7 @@
   <url>
     <loc>https://ink-scholar.github.io/2023/11/24/1/</loc>
     
-    <lastmod>2023-11-26</lastmod>
+    <lastmod>2023-11-29</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/books/index.html</loc>
+    <loc>https://ink-scholar.github.io/about/index.html</loc>
     
     <lastmod>2022-03-21</lastmod>
     
@@ -47,7 +47,7 @@
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/about/index.html</loc>
+    <loc>https://ink-scholar.github.io/books/index.html</loc>
     
     <lastmod>2022-03-21</lastmod>
     
@@ -94,7 +94,7 @@
 
   <url>
     <loc>https://ink-scholar.github.io/</loc>
-    <lastmod>2023-11-26</lastmod>
+    <lastmod>2023-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -102,14 +102,14 @@
   
   <url>
     <loc>https://ink-scholar.github.io/tags/pdf/</loc>
-    <lastmod>2023-11-26</lastmod>
+    <lastmod>2023-11-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ink-scholar.github.io/tags/p/</loc>
-    <lastmod>2023-11-26</lastmod>
+    <lastmod>2023-11-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -118,28 +118,28 @@
   
   <url>
     <loc>https://ink-scholar.github.io/categories/asd/</loc>
-    <lastmod>2023-11-26</lastmod>
+    <lastmod>2023-11-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ink-scholar.github.io/categories/CTF/</loc>
-    <lastmod>2023-11-26</lastmod>
+    <lastmod>2023-11-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ink-scholar.github.io/categories/%E6%B8%97%E9%80%8F/</loc>
-    <lastmod>2023-11-26</lastmod>
+    <lastmod>2023-11-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://ink-scholar.github.io/categories/CTF/%E5%86%85%E7%BD%91/</loc>
-    <lastmod>2023-11-26</lastmod>
+    <lastmod>2023-11-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

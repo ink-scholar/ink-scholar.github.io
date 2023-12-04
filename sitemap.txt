@@ -1,7 +1,7 @@
 https://ink-scholar.github.io/2023/11/24/SRC%E9%80%9A%E7%94%A8%E8%AE%B2%E8%A7%A3/
 https://ink-scholar.github.io/404.html
-https://ink-scholar.github.io/about/index.html
 https://ink-scholar.github.io/books/index.html
+https://ink-scholar.github.io/about/index.html
 https://ink-scholar.github.io/categories/index.html
 https://ink-scholar.github.io/links/index.html
 https://ink-scholar.github.io/repository/index.html

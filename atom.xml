@@ -6,7 +6,7 @@
   <link href="https://ink-scholar.github.io/atom.xml" rel="self"/>
   
   <link href="https://ink-scholar.github.io/"/>
-  <updated>2023-12-03T15:47:22.478Z</updated>
+  <updated>2023-12-04T14:48:45.523Z</updated>
   <id>https://ink-scholar.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://ink-scholar.github.io/2023/11/24/SRC%E9%80%9A%E7%94%A8%E8%AE%B2%E8%A7%A3/"/>
     <id>https://ink-scholar.github.io/2023/11/24/SRC%E9%80%9A%E7%94%A8%E8%AE%B2%E8%A7%A3/</id>
     <published>2023-11-24T13:12:12.413Z</published>
-    <updated>2023-12-03T15:47:22.478Z</updated>
+    <updated>2023-12-04T14:48:45.523Z</updated>
     
     <content type="html"><![CDATA[<p><em><strong>此篇主要讲解src挖掘过程中的通用技巧，已方法为主，帮助快速刷src，赚点赏金</strong></em></p><h1 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h1><h2 id="网络空间搜索"><a href="#网络空间搜索" class="headerlink" title="网络空间搜索"></a>网络空间搜索</h2><h3 id="精准搜索"><a href="#精准搜索" class="headerlink" title="精准搜索"></a>精准搜索</h3><h4 id="域名搜索"><a href="#域名搜索" class="headerlink" title="域名搜索"></a>域名搜索</h4><p>Fofa：domain&#x3D;“baidu.com”</p><p>Hunter：domain.suffix&#x3D;”Baidu.com”</p><p>Google：site:baidu.com</p><h4 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h4><p>微步：<a href="https://x.threatbook.com/">https://x.threatbook.com/</a></p><p>360：<a href="https://ti.360.cn/">https://ti.360.cn/</a></p><p>旁站查询：<a href="https://webscan.cc.(对于ip站更好一点)/">https://webscan.cc。（对于IP站更好一点）</a></p><h4 id="子域名工具"><a href="#子域名工具" class="headerlink" title="子域名工具"></a>子域名工具</h4><p>水泽：<a href="https://github.com/0x727/ShuiZe_0x727">https://github.com/0x727/ShuiZe_0x727</a></p><p>灯塔魔改版：<a href="https://github.com/ki9mu/ARL-plus-docker">https://github.com/ki9mu/ARL-plus-docker</a></p><p>Nemo：<a href="https://github.com/hanc00l/nemo_go">https://github.com/hanc00l/nemo_go</a></p><p>推荐灯塔魔改版</p><h4 id="企业查询"><a href="#企业查询" class="headerlink" title="企业查询"></a>企业查询</h4><p>小蓝本、企查查、爱企查、微信小程序、公众号</p><h1 id="弱口令"><a href="#弱口令" class="headerlink" title="弱口令"></a>弱口令</h1><h1 id="条件竞争（并发）"><a href="#条件竞争（并发）" class="headerlink" title="条件竞争（并发）"></a>条件竞争（并发）</h1><h1 id="越权"><a href="#越权" class="headerlink" title="越权"></a>越权</h1><h1 id="CORS➕XSS"><a href="#CORS➕XSS" class="headerlink" title="CORS➕XSS"></a>CORS➕XSS</h1><h1 id="未授权"><a href="#未授权" class="headerlink" title="未授权"></a>未授权</h1><h1 id="SSRF➕RCE"><a href="#SSRF➕RCE" class="headerlink" title="SSRF➕RCE"></a>SSRF➕RCE</h1><h1 id="逻辑漏洞"><a href="#逻辑漏洞" class="headerlink" title="逻辑漏洞"></a>逻辑漏洞</h1><h1 id="云安全"><a href="#云安全" class="headerlink" title="云安全"></a>云安全</h1><h1 id="常见框架漏洞"><a href="#常见框架漏洞" class="headerlink" title="常见框架漏洞"></a>常见框架漏洞</h1><h1 id><a href="#" class="headerlink" title></a></h1>]]></content>
     

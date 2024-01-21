@@ -27,7 +27,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ink-scholar.github.io/2024/01/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/image-20240120162917489.png">
 <meta property="article:published_time" content="2024-01-02T15:55:32.430Z">
-<meta property="article:modified_time" content="2024-01-21T12:42:36.465Z">
+<meta property="article:modified_time" content="2024-01-21T13:20:37.185Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="信息搜集">
 <meta property="article:tag" content="WEB">
@@ -580,13 +580,13 @@
 <h3 id="流行的JS框架"><a href="#流行的JS框架" class="headerlink" title="流行的JS框架"></a>流行的JS框架</h3><p>Vue、NodeJS、JQuery、Angular</p>
 <h3 id="手动分析"><a href="#手动分析" class="headerlink" title="手动分析"></a>手动分析</h3><p>当确定为js框架后，访问页面刷新，F12查看加载的JS文件，寻找名字有意义的js文件，如login.js</p>
 <p>也可以直接搜索，搜索内容可以是如下：</p>
-<p>src&#x3D;，path&#x3D;，method:”get”，http.get(“，method:”post”，http.post(“，$.ajax，<a target="_blank" rel="noopener" href="http://service.httppost,http//service.httpget">http://service.httppost，http://service.httpget</a></p>
+<p>src&#x3D;，path&#x3D;，method:”get”，http.get(“，method:”post”，http.post(“，$.ajax，<a target="_blank" rel="noopener" href="http://service.httppost/">http://service.httppost</a> ，<a target="_blank" rel="noopener" href="http://service.httpget/">http://service.httpget</a></p>
 <p>大部分地址的代码需要追踪分析</p>
 <h3 id="半自动分析"><a href="#半自动分析" class="headerlink" title="半自动分析"></a>半自动分析</h3><p>结合burp，访问，在Target–Site map中找到网站地址，右键，Engagement tools–Find scripts，即可</p>
 <p>可以用burp官方插件，JS Link Finder和JS Miner</p>
-<p>也可以用第三方的，推荐HaE（知道创宇404开发）（<a target="_blank" rel="noopener" href="https://github.com/gh0stkey/HaE%EF%BC%89%EF%BC%8CUnexpected_information%EF%BC%88https://github.com/ScriptKid-Beta/Unexpected_information%EF%BC%89">https://github.com/gh0stkey/HaE），Unexpected_information（https://github.com/ScriptKid-Beta/Unexpected_information）</a></p>
+<p>也可以用第三方的，推荐HaE（知道创宇404开发）（<a target="_blank" rel="noopener" href="https://github.com/gh0stkey/HaE%EF%BC%89">https://github.com/gh0stkey/HaE）</a> ， Unexpected_information（<a target="_blank" rel="noopener" href="https://github.com/ScriptKid-Beta/Unexpected_information%EF%BC%89">https://github.com/ScriptKid-Beta/Unexpected_information）</a></p>
 <h3 id="全自动"><a href="#全自动" class="headerlink" title="全自动"></a>全自动</h3><p>浏览器插件：findsomething（一个熊猫头）</p>
-<p>脚本工具：JSFinder（不推荐用），URLFinder（jsfinder升级版，更好用一点）（<a target="_blank" rel="noopener" href="https://github.com/pingc0y/URLFinder%EF%BC%89">https://github.com/pingc0y/URLFinder）</a></p>
+<p>脚本工具：JSFinder（不推荐用），URLFinder（jsfinder升级版，更好用一点）（ <a target="_blank" rel="noopener" href="https://github.com/pingc0y/URLFinder">https://github.com/pingc0y/URLFinder</a> ）</p>
 <p>但是有些js文件我们并不能直接在前端分析出路径，比如登陆后加载的js文件，这时候我们需要Fuzz一下，推荐工具 <strong>ffuf</strong> ，使用这个工具需要fuzz字典，字典下载地址：<a target="_blank" rel="noopener" href="https://wordlists.assetnote.io/">https://wordlists.assetnote.io</a></p>
 <p>另一个是针对Webpack等前端打包工具所构造的网站进行一个扫描，<strong>Packer-Fuzzer</strong> ，大部分前端都会用到Webpack</p>
 <h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><h3 id="Web服务器"><a href="#Web服务器" class="headerlink" title="Web服务器"></a>Web服务器</h3><p>判断方法有很多，比如从响应头的Server信息，Apache、Nginx、IIS、lighttpd，Web服务器主要用于提供静态内容，如HTML、CSS和JavaScript等，以及处理对这些内容的HTTP请求。Web服务器通常使用HTTP协议来与客户端通信，以便在浏览器中呈现网页。</p>
@@ -598,7 +598,7 @@
 <h2 id="Waf识别"><a href="#Waf识别" class="headerlink" title="Waf识别"></a>Waf识别</h2><p>web应用防火墙，云waf、硬件waf、软件waf、代码级waf这些，识别的话可以看一下他们的拦截页面，identywaf项目内置了一些拦截页面，当然也可以使用自动的工具。推荐工具 <strong>wafw00f</strong> ， <strong>identYwaf</strong>。除此之外，还可以使用fofa等直接查域名即可</p>
 <h2 id="蜜罐识别"><a href="#蜜罐识别" class="headerlink" title="蜜罐识别"></a>蜜罐识别</h2><p>是一种安全威胁的检测技术，本质在于引诱和欺骗攻击者，并通过记录攻击者的攻击日志来产生价值</p>
 <p>根据蜜罐与攻击者之间进行的交互程度，分为低、中、高交互蜜罐</p>
-<p>识别工具：360quake（<a target="_blank" rel="noopener" href="https://github.com/360quake/quake_rs%EF%BC%89%EF%BC%8C%E5%BD%93%E7%84%B6%EF%BC%8C%E4%B9%9F%E6%98%AF%E7%94%A8%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%9D%A5%E8%AF%86%E5%88%AB%E7%9A%84">https://github.com/360quake/quake_rs），当然，也是用网络空间搜索引擎来识别的</a></p>
+<p>识别工具：360quake（ <a target="_blank" rel="noopener" href="https://github.com/360quake/quake_rs">https://github.com/360quake/quake_rs</a> ） ， 当然，也是用网络空间搜索引擎来识别的</p>
 <p>一般情况下，使用web去访问一些蜜罐端口会出现下载的情况，比如蜜罐开启了mysql应用，然后我们去爆破它，蜜罐就会记录攻击者的账号密码，账号密码会采用web jsonp去传输，当你http协议访问，就会被下载，说到底蜜罐这些功能服务还是使用web功能来实现的</p>
 <h2 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>加速域名（子域名获取真实IP）、加速区域（全球ping）、加速类型（证书）</p>
 <p>当然以上方法和配置有关</p>
@@ -613,7 +613,7 @@
 <p>这里必须用自己的邮件服务器，如果你用比如QQ邮箱去发送，这样投递失败的话，错误信息会先发给QQ，然后QQ在发给我，这样得到的ip其实是QQ的</p>
 <h4 id="在线网站接口查询"><a href="#在线网站接口查询" class="headerlink" title="在线网站接口查询"></a>在线网站接口查询</h4><p><a target="_blank" rel="noopener" href="https://get-site-ip.com/">https://get-site-ip.com/</a>  国外接口，输入域名直接返回真实ip，不过效果的话就要看运气了</p>
 <p> <a target="_blank" rel="noopener" href="https://fofa.info/extensions/source">https://fofa.info/extensions/source</a>  fofa可以查，不过要花钱，如果查国外的话，效果还不错，但是如果查国内站点，效果属实一般甚至没啥效果（法律风险）</p>
-<h4 id="全网扫描"><a href="#全网扫描" class="headerlink" title="全网扫描"></a>全网扫描</h4><p>一般步骤为判断加速厂商（<a target="_blank" rel="noopener" href="https://tools.ipip.net/cdn.php%EF%BC%89%EF%BC%8CIP%E5%BA%93%E7%AD%9B%E5%9C%B0%E5%9D%80%E6%AE%B5%EF%BC%88https://cz88.net/geo-public%EF%BC%89%EF%BC%8C%E9%85%8D%E7%BD%AE%E8%8C%83%E5%9B%B4%E6%89%AB%E6%8F%8F%EF%BC%88%E5%B7%A5%E5%85%B7">https://tools.ipip.net/cdn.php），IP库筛地址段（https://cz88.net/geo-public），配置范围扫描（工具</a> fuckcdn）</p>
+<h4 id="全网扫描"><a href="#全网扫描" class="headerlink" title="全网扫描"></a>全网扫描</h4><p>一般步骤为判断加速厂商（<a target="_blank" rel="noopener" href="https://tools.ipip.net/cdn.php%EF%BC%89">https://tools.ipip.net/cdn.php）</a> ， IP库筛地址段（<a target="_blank" rel="noopener" href="https://cz88.net/geo-public%EF%BC%89">https://cz88.net/geo-public）</a> ， 配置范围扫描（工具 fuckcdn）</p>
 <p>就是先判断厂商，比如是阿里云，然后再去库里面筛选阿里云的ip地址段，然后将这些ip段加入到工具里，再把网站的关键词加到工具里，然后开扫</p>
 <p>这个工具会先从ip段扫描符合开放的端口，再去页面找之前设置的关键字，然后返回结果，不过如果站点不支持ip访问，那就不行了</p>
 <p>这时候换另一个工具： Bypass_cdn</p>

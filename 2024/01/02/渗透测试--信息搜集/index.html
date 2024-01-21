@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>渗透测试--信息搜集 | ink&#39;s blog</title>
+  <meta name="description" content="大部分就是利用一些在线的威胁情报网站，很多技巧都集合在一些工具里，一般几乎都是傻瓜式的操作 业务资产企业信息   名称 地址    小蓝本 https:&#x2F;&#x2F;www.xiaolanben.com&#x2F;   企查查 https:&#x2F;&#x2F;www.qcc.com   国外企查 https:&#x2F;&#x2F;opencorporates.com   爱企查 https:&#x2F;&#x2F;aiqicha.baidu.com&#x2F;    以上的查询其">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渗透测试--信息搜集">
+<meta property="og:url" content="https://ink-scholar.github.io/2024/01/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="大部分就是利用一些在线的威胁情报网站，很多技巧都集合在一些工具里，一般几乎都是傻瓜式的操作 业务资产企业信息   名称 地址    小蓝本 https:&#x2F;&#x2F;www.xiaolanben.com&#x2F;   企查查 https:&#x2F;&#x2F;www.qcc.com   国外企查 https:&#x2F;&#x2F;opencorporates.com   爱企查 https:&#x2F;&#x2F;aiqicha.baidu.com&#x2F;    以上的查询其">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ink-scholar.github.io/2024/01/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/image-20240120162917489.png">
+<meta property="article:published_time" content="2024-01-02T15:55:32.430Z">
+<meta property="article:modified_time" content="2024-01-21T12:42:36.465Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="信息搜集">
+<meta property="article:tag" content="WEB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ink-scholar.github.io/2024/01/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/image-20240120162917489.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://ink-scholar.github.io/2024/01/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/ink-scholar" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">ink</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">就职于奇安信的00后安全研究员</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> NanJing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ink-scholar" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>万般皆下品   唯有读书高</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/SRC/">SRC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/" rel="tag">WEB</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/src/" rel="tag">src</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" rel="tag">代码审计</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" rel="tag">信息搜集</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/WEB/" style="font-size: 14px;">WEB</a> <a href="/tags/src/" style="font-size: 13px;">src</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" style="font-size: 13px;">代码审计</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" style="font-size: 13px;">信息搜集</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 13px;">基础</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/01/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" class="title">渗透测试--信息搜集</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-01-02T15:55:32.430Z" itemprop="datePublished">2024-01-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/17/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E6%A6%82%E8%BF%B0/" class="title">代码审计概述</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-17T12:43:25.221Z" itemprop="datePublished">2023-12-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/12/14/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/" class="title">渗透测试--基础入门</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-12-14T14:33:04.392Z" itemprop="datePublished">2023-12-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/SRC/">SRC</a>
+              </p>
+              <p class="item-title">
+                <a href="/2023/11/24/SRC%E9%80%9A%E7%94%A8%E8%AE%B2%E8%A7%A3/" class="title">SRC通用讲解</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2023-11-24T13:12:12.413Z" itemprop="datePublished">2023-11-24</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+  <aside class="sidebar sidebar-toc collapse   in  " id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E8%B5%84%E4%BA%A7"><span class="toc-number">1.</span> <span class="toc-text">业务资产</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%81%E4%B8%9A%E4%BF%A1%E6%81%AF"><span class="toc-number">1.1.</span> <span class="toc-text">企业信息</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Web%E5%BA%94%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">Web应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#web%E5%8D%95%E5%9F%9F%E5%90%8D"><span class="toc-number">2.1.</span> <span class="toc-text">web单域名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E5%A4%87%E6%A1%88%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96"><span class="toc-number">2.1.1.</span> <span class="toc-text">通过备案信息获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E4%BC%81%E4%B8%9A%E4%BA%A7%E6%9D%83%E8%8E%B7%E5%8F%96"><span class="toc-number">2.1.2.</span> <span class="toc-text">通过企业产权获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E6%B3%A8%E5%86%8C%E5%9F%9F%E5%90%8D%E8%8E%B7%E5%8F%96"><span class="toc-number">2.1.3.</span> <span class="toc-text">通过注册域名获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E5%8F%8D%E6%9F%A5%E8%A7%A3%E6%9E%90%E8%8E%B7%E5%8F%96"><span class="toc-number">2.1.4.</span> <span class="toc-text">通过反查解析获取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web%E5%AD%90%E5%9F%9F%E5%90%8D"><span class="toc-number">2.2.</span> <span class="toc-text">web子域名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS%E6%95%B0%E6%8D%AE"><span class="toc-number">2.2.1.</span> <span class="toc-text">DNS数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%81%E4%B9%A6%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.2.2.</span> <span class="toc-text">证书查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4"><span class="toc-number">2.2.3.</span> <span class="toc-text">网络空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A8%81%E8%83%81%E6%83%85%E6%8A%A5"><span class="toc-number">2.2.4.</span> <span class="toc-text">威胁情报</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE%E8%A7%A3%E6%9E%90"><span class="toc-number">2.2.5.</span> <span class="toc-text">枚举解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web%E6%9E%B6%E6%9E%84"><span class="toc-number">2.3.</span> <span class="toc-text">web架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E7%BA%B9%E8%AF%86%E5%88%AB"><span class="toc-number">2.3.1.</span> <span class="toc-text">指纹识别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7"><span class="toc-number">2.3.1.1.</span> <span class="toc-text">工具</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#gotoscan"><span class="toc-number">2.3.1.1.1.</span> <span class="toc-text">gotoscan</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E8%8E%B7%E5%8F%96"><span class="toc-number">2.3.2.</span> <span class="toc-text">源码获取</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%80%E6%BA%90"><span class="toc-number">2.3.2.1.</span> <span class="toc-text">开源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AD%E6%BA%90"><span class="toc-number">2.3.2.2.</span> <span class="toc-text">闭源</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#git%E6%BA%90%E7%A0%81%E6%B3%84%E6%BC%8F"><span class="toc-number">2.3.2.2.1.</span> <span class="toc-text">git源码泄漏</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#svn%E6%BA%90%E7%A0%81%E6%B3%84%E6%BC%8F"><span class="toc-number">2.3.2.2.2.</span> <span class="toc-text">svn源码泄漏</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BD%91%E7%AB%99%E5%A4%87%E4%BB%BD%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6"><span class="toc-number">2.3.2.2.3.</span> <span class="toc-text">网站备份压缩文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#DS-Store%E6%96%87%E4%BB%B6%E6%B3%84%E6%BC%8F"><span class="toc-number">2.3.2.2.4.</span> <span class="toc-text">DS_Store文件泄漏</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#composer-json"><span class="toc-number">2.3.2.2.5.</span> <span class="toc-text">composer.json</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%96%B9%E5%90%91"><span class="toc-number">2.3.2.3.</span> <span class="toc-text">其他方向</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AF%86%E5%88%AB%E5%87%BA%E5%A4%A7%E8%87%B4%E4%BF%A1%E6%81%AF%E5%8D%B4%E6%97%A0%E6%B3%95%E4%B8%8B%E8%BD%BD"><span class="toc-number">2.3.2.3.1.</span> <span class="toc-text">识别出大致信息却无法下载</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%AA%E8%AF%86%E5%88%AB%E5%87%BA%E4%BF%A1%E6%81%AF%E4%BD%BF%E7%94%A8%E7%A0%81%E4%BA%91%E8%B5%84%E6%BA%90%E8%8E%B7%E5%8F%96"><span class="toc-number">2.3.2.3.2.</span> <span class="toc-text">未识别出信息使用码云资源获取</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E8%A1%8C%E4%B8%9A%E5%BC%80%E5%8F%91%E4%BD%BF%E7%94%A8%E5%AF%B9%E5%8F%A3%E8%B5%84%E6%BA%90%E7%AB%99%E8%8E%B7%E5%8F%96"><span class="toc-number">2.3.2.3.3.</span> <span class="toc-text">其他行业开发使用对口资源站获取</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JS%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84"><span class="toc-number">2.4.</span> <span class="toc-text">JS前端架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFJS%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95"><span class="toc-number">2.4.1.</span> <span class="toc-text">什么是JS渗透测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS%E5%AE%89%E5%85%A8%E9%97%AE%E9%A2%98"><span class="toc-number">2.4.2.</span> <span class="toc-text">JS安全问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E8%A1%8C%E7%9A%84JS%E6%A1%86%E6%9E%B6"><span class="toc-number">2.4.3.</span> <span class="toc-text">流行的JS框架</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E5%8A%A8%E5%88%86%E6%9E%90"><span class="toc-number">2.4.4.</span> <span class="toc-text">手动分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8A%E8%87%AA%E5%8A%A8%E5%88%86%E6%9E%90"><span class="toc-number">2.4.5.</span> <span class="toc-text">半自动分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E8%87%AA%E5%8A%A8"><span class="toc-number">2.4.6.</span> <span class="toc-text">全自动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-number">2.5.</span> <span class="toc-text">中间件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Web%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">2.5.1.</span> <span class="toc-text">Web服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">2.5.2.</span> <span class="toc-text">应用服务器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Waf%E8%AF%86%E5%88%AB"><span class="toc-number">2.6.</span> <span class="toc-text">Waf识别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%9C%9C%E7%BD%90%E8%AF%86%E5%88%AB"><span class="toc-number">2.7.</span> <span class="toc-text">蜜罐识别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CDN"><span class="toc-number">2.8.</span> <span class="toc-text">CDN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-number">2.8.1.</span> <span class="toc-text">配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8"><span class="toc-number">2.8.2.</span> <span class="toc-text">判断是否存在</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%95%E8%BF%87CDN"><span class="toc-number">2.8.3.</span> <span class="toc-text">绕过CDN</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%8A%A8%E5%AF%BB%E6%89%BE-%E9%81%97%E7%95%99%E6%96%87%E4%BB%B6"><span class="toc-number">2.8.3.1.</span> <span class="toc-text">主动寻找&amp;遗留文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%82%AE%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.8.3.2.</span> <span class="toc-text">邮件系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E7%BA%BF%E7%BD%91%E7%AB%99%E6%8E%A5%E5%8F%A3%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.8.3.3.</span> <span class="toc-text">在线网站接口查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A8%E7%BD%91%E6%89%AB%E6%8F%8F"><span class="toc-number">2.8.3.4.</span> <span class="toc-text">全网扫描</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6%E7%BB%84%E4%BB%B6"><span class="toc-number">2.9.</span> <span class="toc-text">框架组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Python%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6"><span class="toc-number">2.9.1.</span> <span class="toc-text">Python开发框架</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Django"><span class="toc-number">2.9.1.1.</span> <span class="toc-text">Django</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Flask"><span class="toc-number">2.9.1.2.</span> <span class="toc-text">Flask</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6"><span class="toc-number">2.9.2.</span> <span class="toc-text">PHP开发框架</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ThinkPHP"><span class="toc-number">2.9.2.1.</span> <span class="toc-text">ThinkPHP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Laravel"><span class="toc-number">2.9.2.2.</span> <span class="toc-text">Laravel</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Yii"><span class="toc-number">2.9.2.3.</span> <span class="toc-text">Yii</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA%E7%BB%84%E4%BB%B6"><span class="toc-number">2.9.3.</span> <span class="toc-text">JAVA组件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fastjson-Jackson"><span class="toc-number">2.9.3.1.</span> <span class="toc-text">Fastjson&#x2F;Jackson</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shiro"><span class="toc-number">2.9.3.2.</span> <span class="toc-text">Shiro</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Struts2"><span class="toc-number">2.9.3.3.</span> <span class="toc-text">Struts2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Springboot"><span class="toc-number">2.9.3.4.</span> <span class="toc-text">Springboot</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solar"><span class="toc-number">2.9.3.5.</span> <span class="toc-text">Solar</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#APP%E5%BA%94%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">APP应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96APP"><span class="toc-number">3.1.</span> <span class="toc-text">获取APP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8D%E7%A7%B0%E8%8E%B7%E5%8F%96"><span class="toc-number">3.1.1.</span> <span class="toc-text">名称获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#URL%E7%BD%91%E7%AB%99%E5%A4%87%E6%A1%88%E8%8E%B7%E5%8F%96"><span class="toc-number">3.1.2.</span> <span class="toc-text">URL网站备案获取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E8%B5%84%E4%BA%A7%E4%BF%A1%E6%81%AF"><span class="toc-number">3.2.</span> <span class="toc-text">获取资产信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%93%E5%8C%85"><span class="toc-number">3.2.1.</span> <span class="toc-text">抓包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E5%8F%96"><span class="toc-number">3.2.2.</span> <span class="toc-text">提取</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BA%94%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">小程序应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96"><span class="toc-number">4.1.</span> <span class="toc-text">获取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%8A%93%E5%8C%85"><span class="toc-number">4.2.</span> <span class="toc-text">小程序抓包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84"><span class="toc-number">4.3.</span> <span class="toc-text">小程序结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E4%BD%93"><span class="toc-number">4.3.1.</span> <span class="toc-text">主体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2"><span class="toc-number">4.3.2.</span> <span class="toc-text">页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">4.3.3.</span> <span class="toc-text">目录结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%80%86%E5%90%91"><span class="toc-number">4.4.</span> <span class="toc-text">小程序逆向</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AC%E5%BC%80%E5%B9%B3%E5%8F%B0"><span class="toc-number">5.</span> <span class="toc-text">公开平台</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7"><span class="toc-number">5.1.</span> <span class="toc-text">微信公众号</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96-1"><span class="toc-number">5.1.1.</span> <span class="toc-text">获取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Github"><span class="toc-number">5.2.</span> <span class="toc-text">Github</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%91%E6%8E%A7"><span class="toc-number">5.2.1.</span> <span class="toc-text">监控</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E6%9C%9F%E7%9B%91%E6%8E%A7"><span class="toc-number">5.2.2.</span> <span class="toc-text">长期监控</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%9B%98%E6%90%9C%E7%B4%A2"><span class="toc-number">5.3.</span> <span class="toc-text">网盘搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%82%AE%E7%AE%B1%E6%90%9C%E9%9B%86"><span class="toc-number">5.4.</span> <span class="toc-text">邮箱搜集</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86%E2%80%93%E5%B7%A5%E5%85%B7%E9%9B%86%E5%90%88"><span class="toc-number">6.</span> <span class="toc-text">信息搜集–工具集合</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#F8x"><span class="toc-number">6.1.</span> <span class="toc-text">F8x</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ENScan"><span class="toc-number">6.2.</span> <span class="toc-text">ENScan</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AsamF"><span class="toc-number">6.3.</span> <span class="toc-text">AsamF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARL%E7%81%AF%E5%A1%94"><span class="toc-number">6.4.</span> <span class="toc-text">ARL灯塔</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nemo"><span class="toc-number">6.5.</span> <span class="toc-text">Nemo</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-渗透测试--信息搜集" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      渗透测试--信息搜集
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2024/01/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" class="article-date">
+	  <time datetime="2024-01-02T15:55:32.430Z" itemprop="datePublished">2024-01-02</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/WEB/" rel="tag">WEB</a>, <a class="article-tag-link-link" href="/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" rel="tag">信息搜集</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2024/01/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p><em>大部分就是利用一些在线的威胁情报网站，很多技巧都集合在一些工具里，一般几乎都是傻瓜式的操作</em></p>
+<h1 id="业务资产"><a href="#业务资产" class="headerlink" title="业务资产"></a>业务资产</h1><h2 id="企业信息"><a href="#企业信息" class="headerlink" title="企业信息"></a>企业信息</h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>小蓝本</td>
+<td><a target="_blank" rel="noopener" href="https://www.xiaolanben.com/">https://www.xiaolanben.com/</a></td>
+</tr>
+<tr>
+<td>企查查</td>
+<td><a target="_blank" rel="noopener" href="https://www.qcc.com/">https://www.qcc.com</a></td>
+</tr>
+<tr>
+<td>国外企查</td>
+<td><a target="_blank" rel="noopener" href="https://opencorporates.com/">https://opencorporates.com</a></td>
+</tr>
+<tr>
+<td>爱企查</td>
+<td><a target="_blank" rel="noopener" href="https://aiqicha.baidu.com/">https://aiqicha.baidu.com/</a></td>
+</tr>
+</tbody></table>
+<p> 以上的查询其实就是输入一个公司名，然后会得到和企业相关的结果，如果网站收费，可以去咸鱼拼多多等地方买会员</p>
+<p>关注点除了域名之外，还有APP和微信公众号等</p>
+<p>根据以上查询的结果归结为以下五种应用，然后对每一种应用类型进行更加细致的信息搜集</p>
+<h1 id="Web应用"><a href="#Web应用" class="headerlink" title="Web应用"></a>Web应用</h1><h2 id="web单域名"><a href="#web单域名" class="headerlink" title="web单域名"></a>web单域名</h2><h3 id="通过备案信息获取"><a href="#通过备案信息获取" class="headerlink" title="通过备案信息获取"></a>通过备案信息获取</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>备案信息查询</td>
+<td><a target="_blank" rel="noopener" href="http://www.beianx.cn/">http://www.beianx.cn/</a></td>
+</tr>
+<tr>
+<td>备案管理系统</td>
+<td><a target="_blank" rel="noopener" href="https://beian.miit.gov.cn/">https://beian.miit.gov.cn/</a></td>
+</tr>
+</tbody></table>
+<p>先输入公司名称，然后根据列出的备案号，重新输入备案号 “-” 前的部分，继续查询</p>
+<h3 id="通过企业产权获取"><a href="#通过企业产权获取" class="headerlink" title="通过企业产权获取"></a>通过企业产权获取</h3><p>和企业信息查询方式一致</p>
+<h3 id="通过注册域名获取"><a href="#通过注册域名获取" class="headerlink" title="通过注册域名获取"></a>通过注册域名获取</h3><p>通过域名注册的网站查询，比如在腾讯云，输入之前获取到的域名信息，看看哪些域名被注册了，当然这只是个思路，并不能保证准确性，当然也很可能，这个公司注册了，但是并未投入使用，如果有业务在上面的话，就有扩展了攻击面</p>
+<h3 id="通过反查解析获取"><a href="#通过反查解析获取" class="headerlink" title="通过反查解析获取"></a>通过反查解析获取</h3><p>通过IP地址反查</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>微步在线</td>
+<td><a target="_blank" rel="noopener" href="https://x.threatbook.cn/">https://x.threatbook.cn/</a></td>
+</tr>
+<tr>
+<td>在线同IP网站查询工具</td>
+<td><a target="_blank" rel="noopener" href="http://dns.bugscaner.com/">http://dns.bugscaner.com/</a></td>
+</tr>
+</tbody></table>
+<h2 id="web子域名"><a href="#web子域名" class="headerlink" title="web子域名"></a>web子域名</h2><h3 id="DNS数据"><a href="#DNS数据" class="headerlink" title="DNS数据"></a>DNS数据</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>dnsdumpster</td>
+<td><a target="_blank" rel="noopener" href="https://dnsdumpster.com/">https://dnsdumpster.com/</a></td>
+</tr>
+</tbody></table>
+<h3 id="证书查询"><a href="#证书查询" class="headerlink" title="证书查询"></a>证书查询</h3><p>https的站点可以直接看到证书，通过证书匹配子域名，通过以下网站或者网络空间搜索引擎cert语法</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th align="left">地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CertificateSearch</td>
+<td align="left"><a target="_blank" rel="noopener" href="https://crt.sh/">https://crt.sh/</a></td>
+</tr>
+</tbody></table>
+<h3 id="网络空间"><a href="#网络空间" class="headerlink" title="网络空间"></a>网络空间</h3><p>根据子域名查询语法查询，比如fofa的domain&#x3D;””</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FOFA</td>
+<td><a target="_blank" rel="noopener" href="https://fofa.info/">https://fofa.info/</a></td>
+</tr>
+<tr>
+<td>全球鹰</td>
+<td><a target="_blank" rel="noopener" href="http://hunter.qianxin.com/">http://hunter.qianxin.com/</a></td>
+</tr>
+<tr>
+<td>360</td>
+<td><a target="_blank" rel="noopener" href="https://quake.360.cn/quake/">https://quake.360.cn/quake/</a></td>
+</tr>
+<tr>
+<td>零零信安（只能国内）</td>
+<td><a target="_blank" rel="noopener" href="https://0.zone/">https://0.zone/</a></td>
+</tr>
+<tr>
+<td>Shodan（国外）</td>
+<td><a target="_blank" rel="noopener" href="https://www.shodan.io/">https://www.shodan.io/</a></td>
+</tr>
+<tr>
+<td>Censys（国外）</td>
+<td><a target="_blank" rel="noopener" href="https://censys.io/">https://censys.io/</a></td>
+</tr>
+</tbody></table>
+<h3 id="威胁情报"><a href="#威胁情报" class="headerlink" title="威胁情报"></a>威胁情报</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>微步在线</td>
+<td><a target="_blank" rel="noopener" href="https://x.threatbook.cn/">https://x.threatbook.cn/</a></td>
+</tr>
+<tr>
+<td>奇安信威胁情报中心</td>
+<td><a target="_blank" rel="noopener" href="https://ti.qianxin.com/">https://ti.qianxin.com/</a></td>
+</tr>
+<tr>
+<td>360威胁情报中心</td>
+<td><a target="_blank" rel="noopener" href="https://ti.360.cn/#/homepage">Https://ti.360.cn/#/homepage</a></td>
+</tr>
+</tbody></table>
+<h3 id="枚举解析"><a href="#枚举解析" class="headerlink" title="枚举解析"></a>枚举解析</h3><p>可以通过在线平台的接口查（不推荐）</p>
+<p>工具推荐oneforall，把上述的方法查不多做了一个结合，通过api接口调用，不过现在这个工具也存在各种各样的问题，可以自己对代码进行一下魔改</p>
+<h2 id="web架构"><a href="#web架构" class="headerlink" title="web架构"></a>web架构</h2><h3 id="指纹识别"><a href="#指纹识别" class="headerlink" title="指纹识别"></a>指纹识别</h3><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TideFinger潮汐指纹</td>
+<td><a target="_blank" rel="noopener" href="http://finger.tidesec.net/">http://finger.tidesec.net/</a></td>
+</tr>
+<tr>
+<td>云悉指纹</td>
+<td><a target="_blank" rel="noopener" href="https://www.yunsee.cn/">https://www.yunsee.cn/</a></td>
+</tr>
+<tr>
+<td>Wapplayzer</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/AliasIO/wappalyzer">https://github.com/AliasIO/wappalyzer</a></td>
+</tr>
+</tbody></table>
+<p>当然，有时候很容易会出现误报，需要自己甄别</p>
+<h4 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h4><h5 id="gotoscan"><a href="#gotoscan" class="headerlink" title="gotoscan"></a>gotoscan</h5><p>适合在不出网环境中使用 </p>
+<h3 id="源码获取"><a href="#源码获取" class="headerlink" title="源码获取"></a>源码获取</h3><h4 id="开源"><a href="#开源" class="headerlink" title="开源"></a>开源</h4><p>直接搜索获取，然后对比一下网站访问情况来确定是否正确</p>
+<h4 id="闭源"><a href="#闭源" class="headerlink" title="闭源"></a>闭源</h4><p>源码不能直接获取是很正常的情况，可以看网站是否存在一些配置不当问题造成的源码泄漏</p>
+<p>以下五种是比较常见的情况</p>
+<h5 id="git源码泄漏"><a href="#git源码泄漏" class="headerlink" title="git源码泄漏"></a>git源码泄漏</h5><p>在执行 git init 初始化目录时，会在当前目录下自动创建一个 .git 目录，用来记录代码的变更记录等。发布代码时，如果没有把 .git 目录删除，就直接发布到了服务器上，攻击者就可以通过它来恢复源代码，可以在网站后加上 .git&#x2F; 看看目录是否存在</p>
+<p>通过工具：<strong>GitHack</strong> 来实现（<a target="_blank" rel="noopener" href="https://github.com/lijiejie/GitHack%EF%BC%89">https://github.com/lijiejie/GitHack）</a></p>
+<h5 id="svn源码泄漏"><a href="#svn源码泄漏" class="headerlink" title="svn源码泄漏"></a>svn源码泄漏</h5><p>原理上和git泄漏差不多，判断方式直接在网站后面加上 .&#x2F;svn&#x2F; 看看是否存在即可</p>
+<p>通过工具：<strong>SvnHack-master</strong> 来实现</p>
+<p>使用时 -u 指定url时，格式为 url&#x2F;.svn&#x2F;entries ，后面加上 – download 即可下载</p>
+<h5 id="网站备份压缩文件"><a href="#网站备份压缩文件" class="headerlink" title="网站备份压缩文件"></a>网站备份压缩文件</h5><p>可以通过目录扫描工具进行尝试 </p>
+<h5 id="DS-Store文件泄漏"><a href="#DS-Store文件泄漏" class="headerlink" title="DS_Store文件泄漏"></a>DS_Store文件泄漏</h5><p>是Mac下Finder用来保存如何展示文件或文件夹的数据文件，每个文件夹下对应一个，如果将它上传至服务器，可能造成目录结构泄漏</p>
+<p>通过工具：<a target="_blank" rel="noopener" href="https://github.com/lijiejie/ds_store_exp">https://github.com/lijiejie/ds_store_exp</a> 来实现</p>
+<h5 id="composer-json"><a href="#composer-json" class="headerlink" title="composer.json"></a>composer.json</h5><p>类似于版权文件的介绍，php中使用</p>
+<h4 id="其他方向"><a href="#其他方向" class="headerlink" title="其他方向"></a>其他方向</h4><h5 id="识别出大致信息却无法下载"><a href="#识别出大致信息却无法下载" class="headerlink" title="识别出大致信息却无法下载"></a>识别出大致信息却无法下载</h5><p>访问网站，查看加载文件，选取一些看着比较有特点的脚本文件、js文件等，然后去github等网站去搜索这个文件，查看结果 </p>
+<h5 id="未识别出信息使用码云资源获取"><a href="#未识别出信息使用码云资源获取" class="headerlink" title="未识别出信息使用码云资源获取"></a>未识别出信息使用码云资源获取</h5><p>有时通过工具扫描，可以扫出一些特征信息，比如开发者的邮箱，可以通过github等平台去尝试搜索</p>
+<h5 id="其他行业开发使用对口资源站获取"><a href="#其他行业开发使用对口资源站获取" class="headerlink" title="其他行业开发使用对口资源站获取"></a>其他行业开发使用对口资源站获取</h5><p>比如互站网</p>
+<h2 id="JS前端架构"><a href="#JS前端架构" class="headerlink" title="JS前端架构"></a>JS前端架构</h2><h3 id="什么是JS渗透测试"><a href="#什么是JS渗透测试" class="headerlink" title="什么是JS渗透测试"></a>什么是JS渗透测试</h3><p>在javascript中也存在变量和函数，我们可以通过浏览器查看源代码获取真实的点，获取url、敏感信息。一般会在JS中寻找更多的URL地址，JS代码逻辑（加密算法、APIkey，验证逻辑）</p>
+<h3 id="JS安全问题"><a href="#JS安全问题" class="headerlink" title="JS安全问题"></a>JS安全问题</h3><p>源码泄漏、未授权访问、敏感key泄漏、API接口安全</p>
+<h3 id="流行的JS框架"><a href="#流行的JS框架" class="headerlink" title="流行的JS框架"></a>流行的JS框架</h3><p>Vue、NodeJS、JQuery、Angular</p>
+<h3 id="手动分析"><a href="#手动分析" class="headerlink" title="手动分析"></a>手动分析</h3><p>当确定为js框架后，访问页面刷新，F12查看加载的JS文件，寻找名字有意义的js文件，如login.js</p>
+<p>也可以直接搜索，搜索内容可以是如下：</p>
+<p>src&#x3D;，path&#x3D;，method:”get”，http.get(“，method:”post”，http.post(“，$.ajax，<a target="_blank" rel="noopener" href="http://service.httppost,http//service.httpget">http://service.httppost，http://service.httpget</a></p>
+<p>大部分地址的代码需要追踪分析</p>
+<h3 id="半自动分析"><a href="#半自动分析" class="headerlink" title="半自动分析"></a>半自动分析</h3><p>结合burp，访问，在Target–Site map中找到网站地址，右键，Engagement tools–Find scripts，即可</p>
+<p>可以用burp官方插件，JS Link Finder和JS Miner</p>
+<p>也可以用第三方的，推荐HaE（知道创宇404开发）（<a target="_blank" rel="noopener" href="https://github.com/gh0stkey/HaE%EF%BC%89%EF%BC%8CUnexpected_information%EF%BC%88https://github.com/ScriptKid-Beta/Unexpected_information%EF%BC%89">https://github.com/gh0stkey/HaE），Unexpected_information（https://github.com/ScriptKid-Beta/Unexpected_information）</a></p>
+<h3 id="全自动"><a href="#全自动" class="headerlink" title="全自动"></a>全自动</h3><p>浏览器插件：findsomething（一个熊猫头）</p>
+<p>脚本工具：JSFinder（不推荐用），URLFinder（jsfinder升级版，更好用一点）（<a target="_blank" rel="noopener" href="https://github.com/pingc0y/URLFinder%EF%BC%89">https://github.com/pingc0y/URLFinder）</a></p>
+<p>但是有些js文件我们并不能直接在前端分析出路径，比如登陆后加载的js文件，这时候我们需要Fuzz一下，推荐工具 <strong>ffuf</strong> ，使用这个工具需要fuzz字典，字典下载地址：<a target="_blank" rel="noopener" href="https://wordlists.assetnote.io/">https://wordlists.assetnote.io</a></p>
+<p>另一个是针对Webpack等前端打包工具所构造的网站进行一个扫描，<strong>Packer-Fuzzer</strong> ，大部分前端都会用到Webpack</p>
+<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><h3 id="Web服务器"><a href="#Web服务器" class="headerlink" title="Web服务器"></a>Web服务器</h3><p>判断方法有很多，比如从响应头的Server信息，Apache、Nginx、IIS、lighttpd，Web服务器主要用于提供静态内容，如HTML、CSS和JavaScript等，以及处理对这些内容的HTTP请求。Web服务器通常使用HTTP协议来与客户端通信，以便在浏览器中呈现网页。</p>
+<h3 id="应用服务器"><a href="#应用服务器" class="headerlink" title="应用服务器"></a>应用服务器</h3><p>Tomcat、Jboss、Weblogic、Websphere，相比于web服务器，他们的特点是有特定端口服务的开放，所以应用服务器的探测要用到端口扫描，通过Server信息一般很难看到，应用服务器主要用于提供动态内容，如数据库查询和Web应用程序逻辑等，通常与Web服务器协同工作。应用服务器通常使用专有协议与客户端通信，以便执行更复杂的操作和提供更高级的功能。</p>
+<p>扫描工具：nmap、masscan</p>
+<p>被动扫描：利用网络空间搜索引擎。fofa等</p>
+<p>端口扫描还可以扫其他的服务，比如数据库mysql、sqlserver、oracle、redis、mongodb，操作系统linux、windows等</p>
+<p>有一种现象需要注意，比如一个web搭在了内网，然后把web端口转到了外网，这时你只能扫外网ip，你可以扫到web服务，但是如果内网中开启了比如mysql且没有转到外网，这样你是扫不到的，但是web本身用到了mysql，这是一种现象</p>
+<h2 id="Waf识别"><a href="#Waf识别" class="headerlink" title="Waf识别"></a>Waf识别</h2><p>web应用防火墙，云waf、硬件waf、软件waf、代码级waf这些，识别的话可以看一下他们的拦截页面，identywaf项目内置了一些拦截页面，当然也可以使用自动的工具。推荐工具 <strong>wafw00f</strong> ， <strong>identYwaf</strong>。除此之外，还可以使用fofa等直接查域名即可</p>
+<h2 id="蜜罐识别"><a href="#蜜罐识别" class="headerlink" title="蜜罐识别"></a>蜜罐识别</h2><p>是一种安全威胁的检测技术，本质在于引诱和欺骗攻击者，并通过记录攻击者的攻击日志来产生价值</p>
+<p>根据蜜罐与攻击者之间进行的交互程度，分为低、中、高交互蜜罐</p>
+<p>识别工具：360quake（<a target="_blank" rel="noopener" href="https://github.com/360quake/quake_rs%EF%BC%89%EF%BC%8C%E5%BD%93%E7%84%B6%EF%BC%8C%E4%B9%9F%E6%98%AF%E7%94%A8%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%9D%A5%E8%AF%86%E5%88%AB%E7%9A%84">https://github.com/360quake/quake_rs），当然，也是用网络空间搜索引擎来识别的</a></p>
+<p>一般情况下，使用web去访问一些蜜罐端口会出现下载的情况，比如蜜罐开启了mysql应用，然后我们去爆破它，蜜罐就会记录攻击者的账号密码，账号密码会采用web jsonp去传输，当你http协议访问，就会被下载，说到底蜜罐这些功能服务还是使用web功能来实现的</p>
+<h2 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>加速域名（子域名获取真实IP）、加速区域（全球ping）、加速类型（证书）</p>
+<p>当然以上方法和配置有关</p>
+<h3 id="判断是否存在"><a href="#判断是否存在" class="headerlink" title="判断是否存在"></a>判断是否存在</h3><p>多地区ping，看一下IP是否相同，若不同，则使用了CDN，使用网站：17ce.com、ping.chinaz.com</p>
+<p>如果你怀疑某个ip是否是这个域名的真实ip，可以将这个ip和域名写入hosts文件，然后访问域名，若成功，则是</p>
+<h3 id="绕过CDN"><a href="#绕过CDN" class="headerlink" title="绕过CDN"></a>绕过CDN</h3><h4 id="主动寻找-遗留文件"><a href="#主动寻找-遗留文件" class="headerlink" title="主动寻找&amp;遗留文件"></a>主动寻找&amp;遗留文件</h4><p>除了上诉这些子域名等方法，还可以尝试一些主动漏洞或者遗留文件，如ssrf，让站点来主动访问我们，可以用dnslog平台来记录站点的ip，当然如果网站存在像远程加载图片这种功能，同样可以利用这种方法，让网站主动来访问我们，然后记录下ip地址；遗留文件如phpinfo这种配置文件，也可能会</p>
+<h4 id="邮件系统"><a href="#邮件系统" class="headerlink" title="邮件系统"></a>邮件系统</h4><p>有两种情况，第一种就是邮件系统做不了CDN，因为邮件系统记录类型通常为MX，这种记录类型一般无法设置CDN</p>
+<p>第二种情况其实也是主动寻找，就是它主动给我发邮件，然后查看显示邮件原文即可看到真实ip</p>
+<p>常见的邮件触发点有：RSS订阅、邮箱注册激活、找回密码、邮件推送、邮件通知等</p>
+<p>不过在收到邮件时要先看一下发件人，是否是使用了他们自己的邮件服务器，因为有可能是代发，使用如126这种其他的邮箱代发</p>
+<p>还有一种骚操作：首先你自己用vps搞个邮箱服务器，然后你发送邮件到一个不存在的邮箱地址，因为该用户不存在，所以发送失败，并且还会收到一个包含发送该电子邮件给你的服务器的真实IP通知，不过如果对方设置了一些策略，比如任何邮件地址都可以投递成功这种，这种方法就失效</p>
+<p>这里必须用自己的邮件服务器，如果你用比如QQ邮箱去发送，这样投递失败的话，错误信息会先发给QQ，然后QQ在发给我，这样得到的ip其实是QQ的</p>
+<h4 id="在线网站接口查询"><a href="#在线网站接口查询" class="headerlink" title="在线网站接口查询"></a>在线网站接口查询</h4><p><a target="_blank" rel="noopener" href="https://get-site-ip.com/">https://get-site-ip.com/</a>  国外接口，输入域名直接返回真实ip，不过效果的话就要看运气了</p>
+<p> <a target="_blank" rel="noopener" href="https://fofa.info/extensions/source">https://fofa.info/extensions/source</a>  fofa可以查，不过要花钱，如果查国外的话，效果还不错，但是如果查国内站点，效果属实一般甚至没啥效果（法律风险）</p>
+<h4 id="全网扫描"><a href="#全网扫描" class="headerlink" title="全网扫描"></a>全网扫描</h4><p>一般步骤为判断加速厂商（<a target="_blank" rel="noopener" href="https://tools.ipip.net/cdn.php%EF%BC%89%EF%BC%8CIP%E5%BA%93%E7%AD%9B%E5%9C%B0%E5%9D%80%E6%AE%B5%EF%BC%88https://cz88.net/geo-public%EF%BC%89%EF%BC%8C%E9%85%8D%E7%BD%AE%E8%8C%83%E5%9B%B4%E6%89%AB%E6%8F%8F%EF%BC%88%E5%B7%A5%E5%85%B7">https://tools.ipip.net/cdn.php），IP库筛地址段（https://cz88.net/geo-public），配置范围扫描（工具</a> fuckcdn）</p>
+<p>就是先判断厂商，比如是阿里云，然后再去库里面筛选阿里云的ip地址段，然后将这些ip段加入到工具里，再把网站的关键词加到工具里，然后开扫</p>
+<p>这个工具会先从ip段扫描符合开放的端口，再去页面找之前设置的关键字，然后返回结果，不过如果站点不支持ip访问，那就不行了</p>
+<p>这时候换另一个工具： Bypass_cdn</p>
+<h2 id="框架组件"><a href="#框架组件" class="headerlink" title="框架组件"></a>框架组件</h2><h3 id="Python开发框架"><a href="#Python开发框架" class="headerlink" title="Python开发框架"></a>Python开发框架</h3><h4 id="Django"><a href="#Django" class="headerlink" title="Django"></a>Django</h4><p>可以用插件识别，数据包中一般存在Set-Cookie:csrftoken&#x3D;</p>
+<h4 id="Flask"><a href="#Flask" class="headerlink" title="Flask"></a>Flask</h4><p>插件识别，数据包中一般会出现flask</p>
+<h3 id="PHP开发框架"><a href="#PHP开发框架" class="headerlink" title="PHP开发框架"></a>PHP开发框架</h3><h4 id="ThinkPHP"><a href="#ThinkPHP" class="headerlink" title="ThinkPHP"></a>ThinkPHP</h4><p>插件识别，数据包中带有ThinkPHP，网站的图标识别，还有很多是用thinkPHP二次开发</p>
+<h4 id="Laravel"><a href="#Laravel" class="headerlink" title="Laravel"></a>Laravel</h4><p>插件识别，数据包特征</p>
+<h4 id="Yii"><a href="#Yii" class="headerlink" title="Yii"></a>Yii</h4><p>插件识别，数据包特征</p>
+<h3 id="JAVA组件"><a href="#JAVA组件" class="headerlink" title="JAVA组件"></a>JAVA组件</h3><p>52类110个主流的JAVA组件</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/agonie201218/article/details/125300729">https://blog.csdn.net/agonie201218/article/details/125300729</a></p>
+<h4 id="Fastjson-Jackson"><a href="#Fastjson-Jackson" class="headerlink" title="Fastjson&#x2F;Jackson"></a>Fastjson&#x2F;Jackson</h4><p>Fastjson可以将Java对象和json格式字符串之间相互转换</p>
+<p>在提交json数据包中修改测试，Fastjson组件会把01解析成1，Jackson组件在解析01时会抛出异常</p>
+<p><a target="_blank" rel="noopener" href="https://forum.butian.net/share/1679">https://forum.butian.net/share/1679</a></p>
+<h4 id="Shiro"><a href="#Shiro" class="headerlink" title="Shiro"></a>Shiro</h4><p>执行身份验证、授权、密码和会话管理</p>
+<p>请求包的cookie中存在rememberMe字段，返回包中存在set-Cookie: rememberMe&#x3D;deleteMe。请求包中存在rememberMe&#x3D;x时，响应包中存在rememberMe&#x3D;deleteMe。有时候服务器不会主动返回rememberMe&#x3D;deleteMe，直接发包即可，将Cookie内容改为rememberMe&#x3D;1，若响应包有rememberMe&#x3D;deleteMe，则基本可以确定网站是apache shiro搭建的</p>
+<h4 id="Struts2"><a href="#Struts2" class="headerlink" title="Struts2"></a>Struts2</h4><p>一般使用此框架后缀带do或action，可以尝试进行利用</p>
+<h4 id="Springboot"><a href="#Springboot" class="headerlink" title="Springboot"></a>Springboot</h4><p>默认报错页面</p>
+<p><img src="/2024/01/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/image-20240120162917489.png" alt="image-20240120162917489"></p>
+<p>还有他的默认图标，一个绿色的叶子，icon_hash&#x3D;116323821</p>
+<h4 id="Solar"><a href="#Solar" class="headerlink" title="Solar"></a>Solar</h4><p>一般开放8983端口</p>
+<h1 id="APP应用"><a href="#APP应用" class="headerlink" title="APP应用"></a>APP应用</h1><h2 id="获取APP"><a href="#获取APP" class="headerlink" title="获取APP"></a>获取APP</h2><h3 id="名称获取"><a href="#名称获取" class="headerlink" title="名称获取"></a>名称获取</h3><p>1、爱企查–知识产权</p>
+<p>2、七麦(<a target="_blank" rel="noopener" href="https://qimai.cn)、点点(https//app.diandian.com)%E3%80%81%E5%B0%8F%E8%93%9D%E6%9C%AC%E3%80%81%E8%B1%8C%E8%B1%86%E8%8D%9A%E6%9F%A5%E5%90%8D%E7%A7%B0">https://qimai.cn)、点点(https://app.diandian.com)、小蓝本、豌豆荚查名称</a></p>
+<h3 id="URL网站备案获取"><a href="#URL网站备案获取" class="headerlink" title="URL网站备案获取"></a>URL网站备案获取</h3><p>1、备案信息查询</p>
+<p>2、网站上有APP下载</p>
+<p>3、应用市场直接搜单位名称</p>
+<h2 id="获取资产信息"><a href="#获取资产信息" class="headerlink" title="获取资产信息"></a>获取资产信息</h2><h3 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h3><p>假设一个场景，我们打开APP时，开启抓包但是没有数据，点击登录这个功能时抓到了包，得到了一个网址，但是这个网址在反编译后并没有得到</p>
+<p>原因就是登录界面是APP打包的资源，并没有对外发送数据，而反编译也是一个静态分析的过程，所以我们还要进行一个动态的分析</p>
+<p>但是如果我们打开APP时就有数据包，那通过静态分析能得到数据吗？</p>
+<p>那也不一定，因为APP可能会对这些网址进行加密处理，一般的静态分析工具通过正则不一定可以匹配的到</p>
+<p>这是一个动态分析的过程，但是我们在模拟器中抓包，肯定是抓不全的，和代理证书有关，不过可以借助下面的MobSF平台来实现动态调试</p>
+<h3 id="提取"><a href="#提取" class="headerlink" title="提取"></a>提取</h3><p>使用一些工具和在线的平台</p>
+<p>MobSF(自己手动搭建，可以动态和静态分析，推荐，<a target="_blank" rel="noopener" href="https://github.com/MobSF/Mobile-Security-Framework-MobSF)%E3%80%81AppInfoScanner(https://github.com/kelvinBen/AppInfoScanner%EF%BC%8C%E6%8E%A8%E8%8D%90)">https://github.com/MobSF/Mobile-Security-Framework-MobSF)、AppInfoScanner(https://github.com/kelvinBen/AppInfoScanner，推荐)</a> </p>
+<p>MobSF在进行动态调试时，需要在本地安装一个模拟器，比如逍遥模拟器即可</p>
+<h1 id="小程序应用"><a href="#小程序应用" class="headerlink" title="小程序应用"></a>小程序应用</h1><h2 id="获取"><a href="#获取" class="headerlink" title="获取"></a>获取</h2><p>在各大平台（微信、支付宝等）搜索</p>
+<h2 id="小程序抓包"><a href="#小程序抓包" class="headerlink" title="小程序抓包"></a>小程序抓包</h2><p>在基础篇提到过，就是burp和proxifier的联动</p>
+<h2 id="小程序结构"><a href="#小程序结构" class="headerlink" title="小程序结构"></a>小程序结构</h2><h3 id="主体"><a href="#主体" class="headerlink" title="主体"></a>主体</h3><p>一个小程序的主体部分由三个文件组成，必须放在项目的根目录，如下</p>
+<p>app.js — 必须要有，是小程序的逻辑</p>
+<p>app.json — 必须要有，是小程序的公共配置</p>
+<p>app.wxss — 不是必须的，是小程序的公共样式表</p>
+<h3 id="页面"><a href="#页面" class="headerlink" title="页面"></a>页面</h3><p>页面由四个文件组成</p>
+<p>xxx.js是页面逻辑，xxx.json是页面配置，xxx.wxml是页面结构，xxx.wxss是页面样式</p>
+<h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><p>pages 页面文件夹， index 首页， logs 日志， util 工具类（mina框架自动生成）， app.js 入口js（类似于java类中的main方法）、全局js， app.json 全局配置文件， app.wxss 全局样式文件， project.config.json 跟你在详情中勾选的配置一样， sitemap.json 用来配置小程序及其页面是否允许被微信索引 </p>
+<h2 id="小程序逆向"><a href="#小程序逆向" class="headerlink" title="小程序逆向"></a>小程序逆向</h2><p>推荐个工具 <a target="_blank" rel="noopener" href="http://xcx.siqingw.top/">http://xcx.siqingw.top</a> ，目前只能在windows x86和x64 架构运行，具体操作方法网站上都有，这里大致说一下</p>
+<p>这个工具在反编译小程序分两部分，选择解包文件和刷新反编译包，解包文件地址为小程序的目录地址，在电脑端的微信点击微信—文件管理，打开文件路径后回到它的上一级，选择Applet文件夹，可以把所有文件夹删掉，然后访问一下你想逆向的小程序，这个目录下面就会出现这个小程序的文件夹，这个就是你要解包的文件地址，选择里面的 .wxapkg文件即可，如果有多个.wxapkg文件，全选即可，不过要将__APP__.wxapkg放在第一个，解包后点击刷新反编译包即可，之后在操作区点击新版反编译，然后就可以在指定目录看到结果</p>
+<p>之后使用微信官方的微信开发者工具，将刚刚反编译后的源码导入，即可进行调试，如果js加载有保存导致页面无法正常显示，可以在右上角的详情—本地设置—将JS编译成ESS的勾选给去掉，即可，将可视化打开，通过点击右侧的代码文件，左侧的可视化界面就会随之跳转</p>
+<p>之后我们就可以先简单测试一下未授权访问之类的信息，比如小程序需要先登录，但是我们本地打开后访问一些文件，成功了就是未授权，或者在源码里搜索Accesskey之类的关键字，后面会详细讲解</p>
+<h1 id="公开平台"><a href="#公开平台" class="headerlink" title="公开平台"></a>公开平台</h1><h2 id="微信公众号"><a href="#微信公众号" class="headerlink" title="微信公众号"></a>微信公众号</h2><h3 id="获取-1"><a href="#获取-1" class="headerlink" title="获取"></a>获取</h3><p><a target="_blank" rel="noopener" href="https://weixin.sogou.com,查询成功后看下有无第三方服务/">https://weixin.sogou.com，查询成功后看下有无第三方服务</a></p>
+<h2 id="Github"><a href="#Github" class="headerlink" title="Github"></a>Github</h2><h3 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h3><p>人员、域名、邮箱等筛选，如xxx.cn password in:file</p>
+<p>更多搜索规则可以自行查阅</p>
+<p>关键字配合谷歌搜索：</p>
+<p>site:Github.com smtp @qq.com</p>
+<p>site:Github.com smtp password</p>
+<p>site:Github.com String password smtp</p>
+<h3 id="长期监控"><a href="#长期监控" class="headerlink" title="长期监控"></a>长期监控</h3><p><a target="_blank" rel="noopener" href="https://github.com/madneal/gshark%EF%BC%8Chttps://github.com/Explorer1092/Github-Monitor">https://github.com/madneal/gshark，https://github.com/Explorer1092/Github-Monitor</a></p>
+<h2 id="网盘搜索"><a href="#网盘搜索" class="headerlink" title="网盘搜索"></a>网盘搜索</h2><p>可以在百度网盘之类的直接搜索，也可以找一些接口</p>
+<h2 id="邮箱搜集"><a href="#邮箱搜集" class="headerlink" title="邮箱搜集"></a>邮箱搜集</h2><p><a target="_blank" rel="noopener" href="https://hunter.io/">https://hunter.io/</a></p>
+<h1 id="信息搜集–工具集合"><a href="#信息搜集–工具集合" class="headerlink" title="信息搜集–工具集合"></a>信息搜集–工具集合</h1><p>先推荐个地址：<a target="_blank" rel="noopener" href="https://github.com/guchangan1/All-Defense-Tool">https://github.com/guchangan1/All-Defense-Tool</a></p>
+<h2 id="F8x"><a href="#F8x" class="headerlink" title="F8x"></a>F8x</h2><p><a target="_blank" rel="noopener" href="https://github.com/ffffffff0x/f8x%EF%BC%8C%E4%B8%80%E6%AC%BE%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B7%A5%E5%85%B7">https://github.com/ffffffff0x/f8x，一款自动化部署工具</a></p>
+<h2 id="ENScan"><a href="#ENScan" class="headerlink" title="ENScan"></a>ENScan</h2><p>针对于企业信息查询，在配置文件中自己配置一些cookie和token即可</p>
+<h2 id="AsamF"><a href="#AsamF" class="headerlink" title="AsamF"></a>AsamF</h2><p>集成了fofa、hunter、quake、zoomeye等平台，只需要在配置文件中把key配置好即可使用，优点就是hunter和quake导出是要花费积分的，使用这个工具可以免费导出，配置key的作用在于你的查询权限，如果你在平台上只能查询第一页，那就只能导出第一页</p>
+<h2 id="ARL灯塔"><a href="#ARL灯塔" class="headerlink" title="ARL灯塔"></a>ARL灯塔</h2><p><a target="_blank" rel="noopener" href="https://github.com/TophantTechnology/ARL%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%90%9C%E4%B8%80%E4%B8%8BARL%E9%AD%94%E6%94%B9%E7%89%88%E7%9A%84%E6%90%AD%E5%BB%BA%EF%BC%8C%E6%8A%8A%E6%8C%87%E7%BA%B9%E5%BA%93%E4%B9%8B%E7%B1%BB%E7%9A%84%E5%8A%A0%E4%BA%86%E8%BF%9B%E5%8E%BB">https://github.com/TophantTechnology/ARL，可以搜一下ARL魔改版的搭建，把指纹库之类的加了进去</a></p>
+<h2 id="Nemo"><a href="#Nemo" class="headerlink" title="Nemo"></a>Nemo</h2><p><a target="_blank" rel="noopener" href="https://github.com/hanc00l/nemo_go">https://github.com/hanc00l/nemo_go</a> </p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://ink-scholar.github.io/2024/01/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" title="渗透测试--信息搜集" target="_blank" rel="external">https://ink-scholar.github.io/2024/01/02/渗透测试--信息搜集/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/ink-scholar" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/ink-scholar" target="_blank"><span class="text-dark">ink</span><small class="ml-1x">就职于奇安信的00后安全研究员</small></a></h3>
+        <div>一招鲜？更喜欢百招全，立志成为全栈安全大牛。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2023/12/17/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E6%A6%82%E8%BF%B0/" title="代码审计概述"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn " data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">    <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ink-scholar" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+</body>
+</html>

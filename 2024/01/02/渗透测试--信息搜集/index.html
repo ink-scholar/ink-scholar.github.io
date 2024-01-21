@@ -27,7 +27,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ink-scholar.github.io/2024/01/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/image-20240120162917489.png">
 <meta property="article:published_time" content="2024-01-02T15:55:32.430Z">
-<meta property="article:modified_time" content="2024-01-21T13:20:37.185Z">
+<meta property="article:modified_time" content="2024-01-21T13:40:09.720Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="信息搜集">
 <meta property="article:tag" content="WEB">
@@ -564,7 +564,7 @@
 <h4 id="闭源"><a href="#闭源" class="headerlink" title="闭源"></a>闭源</h4><p>源码不能直接获取是很正常的情况，可以看网站是否存在一些配置不当问题造成的源码泄漏</p>
 <p>以下五种是比较常见的情况</p>
 <h5 id="git源码泄漏"><a href="#git源码泄漏" class="headerlink" title="git源码泄漏"></a>git源码泄漏</h5><p>在执行 git init 初始化目录时，会在当前目录下自动创建一个 .git 目录，用来记录代码的变更记录等。发布代码时，如果没有把 .git 目录删除，就直接发布到了服务器上，攻击者就可以通过它来恢复源代码，可以在网站后加上 .git&#x2F; 看看目录是否存在</p>
-<p>通过工具：<strong>GitHack</strong> 来实现（<a target="_blank" rel="noopener" href="https://github.com/lijiejie/GitHack%EF%BC%89">https://github.com/lijiejie/GitHack）</a></p>
+<p>通过工具：<strong>GitHack</strong> 来实现（ <a target="_blank" rel="noopener" href="https://github.com/lijiejie/GitHack">https://github.com/lijiejie/GitHack</a> ）</p>
 <h5 id="svn源码泄漏"><a href="#svn源码泄漏" class="headerlink" title="svn源码泄漏"></a>svn源码泄漏</h5><p>原理上和git泄漏差不多，判断方式直接在网站后面加上 .&#x2F;svn&#x2F; 看看是否存在即可</p>
 <p>通过工具：<strong>SvnHack-master</strong> 来实现</p>
 <p>使用时 -u 指定url时，格式为 url&#x2F;.svn&#x2F;entries ，后面加上 – download 即可下载</p>
@@ -580,11 +580,11 @@
 <h3 id="流行的JS框架"><a href="#流行的JS框架" class="headerlink" title="流行的JS框架"></a>流行的JS框架</h3><p>Vue、NodeJS、JQuery、Angular</p>
 <h3 id="手动分析"><a href="#手动分析" class="headerlink" title="手动分析"></a>手动分析</h3><p>当确定为js框架后，访问页面刷新，F12查看加载的JS文件，寻找名字有意义的js文件，如login.js</p>
 <p>也可以直接搜索，搜索内容可以是如下：</p>
-<p>src&#x3D;，path&#x3D;，method:”get”，http.get(“，method:”post”，http.post(“，$.ajax，<a target="_blank" rel="noopener" href="http://service.httppost/">http://service.httppost</a> ，<a target="_blank" rel="noopener" href="http://service.httpget/">http://service.httpget</a></p>
+<p>src&#x3D;，path&#x3D;，method:”get”，http.get(“，method:”post”，http.post(“，$.ajax，service.httppost，service.httpget</p>
 <p>大部分地址的代码需要追踪分析</p>
 <h3 id="半自动分析"><a href="#半自动分析" class="headerlink" title="半自动分析"></a>半自动分析</h3><p>结合burp，访问，在Target–Site map中找到网站地址，右键，Engagement tools–Find scripts，即可</p>
 <p>可以用burp官方插件，JS Link Finder和JS Miner</p>
-<p>也可以用第三方的，推荐HaE（知道创宇404开发）（<a target="_blank" rel="noopener" href="https://github.com/gh0stkey/HaE%EF%BC%89">https://github.com/gh0stkey/HaE）</a> ， Unexpected_information（<a target="_blank" rel="noopener" href="https://github.com/ScriptKid-Beta/Unexpected_information%EF%BC%89">https://github.com/ScriptKid-Beta/Unexpected_information）</a></p>
+<p>也可以用第三方的，推荐HaE（知道创宇404开发）（ <a target="_blank" rel="noopener" href="https://github.com/gh0stkey/HaE">https://github.com/gh0stkey/HaE</a> ） ， Unexpected_information（ <a target="_blank" rel="noopener" href="https://github.com/ScriptKid-Beta/Unexpected_information">https://github.com/ScriptKid-Beta/Unexpected_information</a> ）</p>
 <h3 id="全自动"><a href="#全自动" class="headerlink" title="全自动"></a>全自动</h3><p>浏览器插件：findsomething（一个熊猫头）</p>
 <p>脚本工具：JSFinder（不推荐用），URLFinder（jsfinder升级版，更好用一点）（ <a target="_blank" rel="noopener" href="https://github.com/pingc0y/URLFinder">https://github.com/pingc0y/URLFinder</a> ）</p>
 <p>但是有些js文件我们并不能直接在前端分析出路径，比如登陆后加载的js文件，这时候我们需要Fuzz一下，推荐工具 <strong>ffuf</strong> ，使用这个工具需要fuzz字典，字典下载地址：<a target="_blank" rel="noopener" href="https://wordlists.assetnote.io/">https://wordlists.assetnote.io</a></p>
@@ -613,7 +613,7 @@
 <p>这里必须用自己的邮件服务器，如果你用比如QQ邮箱去发送，这样投递失败的话，错误信息会先发给QQ，然后QQ在发给我，这样得到的ip其实是QQ的</p>
 <h4 id="在线网站接口查询"><a href="#在线网站接口查询" class="headerlink" title="在线网站接口查询"></a>在线网站接口查询</h4><p><a target="_blank" rel="noopener" href="https://get-site-ip.com/">https://get-site-ip.com/</a>  国外接口，输入域名直接返回真实ip，不过效果的话就要看运气了</p>
 <p> <a target="_blank" rel="noopener" href="https://fofa.info/extensions/source">https://fofa.info/extensions/source</a>  fofa可以查，不过要花钱，如果查国外的话，效果还不错，但是如果查国内站点，效果属实一般甚至没啥效果（法律风险）</p>
-<h4 id="全网扫描"><a href="#全网扫描" class="headerlink" title="全网扫描"></a>全网扫描</h4><p>一般步骤为判断加速厂商（<a target="_blank" rel="noopener" href="https://tools.ipip.net/cdn.php%EF%BC%89">https://tools.ipip.net/cdn.php）</a> ， IP库筛地址段（<a target="_blank" rel="noopener" href="https://cz88.net/geo-public%EF%BC%89">https://cz88.net/geo-public）</a> ， 配置范围扫描（工具 fuckcdn）</p>
+<h4 id="全网扫描"><a href="#全网扫描" class="headerlink" title="全网扫描"></a>全网扫描</h4><p>一般步骤为判断加速厂商（ <a target="_blank" rel="noopener" href="https://tools.ipip.net/cdn.php">https://tools.ipip.net/cdn.php</a> ） ， IP库筛地址段（ <a target="_blank" rel="noopener" href="https://cz88.net/geo-public">https://cz88.net/geo-public</a> ） ， 配置范围扫描（工具 fuckcdn）</p>
 <p>就是先判断厂商，比如是阿里云，然后再去库里面筛选阿里云的ip地址段，然后将这些ip段加入到工具里，再把网站的关键词加到工具里，然后开扫</p>
 <p>这个工具会先从ip段扫描符合开放的端口，再去页面找之前设置的关键字，然后返回结果，不过如果站点不支持ip访问，那就不行了</p>
 <p>这时候换另一个工具： Bypass_cdn</p>
@@ -635,7 +635,7 @@
 <p>还有他的默认图标，一个绿色的叶子，icon_hash&#x3D;116323821</p>
 <h4 id="Solar"><a href="#Solar" class="headerlink" title="Solar"></a>Solar</h4><p>一般开放8983端口</p>
 <h1 id="APP应用"><a href="#APP应用" class="headerlink" title="APP应用"></a>APP应用</h1><h2 id="获取APP"><a href="#获取APP" class="headerlink" title="获取APP"></a>获取APP</h2><h3 id="名称获取"><a href="#名称获取" class="headerlink" title="名称获取"></a>名称获取</h3><p>1、爱企查–知识产权</p>
-<p>2、七麦(<a target="_blank" rel="noopener" href="https://qimai.cn)、点点(https//app.diandian.com)%E3%80%81%E5%B0%8F%E8%93%9D%E6%9C%AC%E3%80%81%E8%B1%8C%E8%B1%86%E8%8D%9A%E6%9F%A5%E5%90%8D%E7%A7%B0">https://qimai.cn)、点点(https://app.diandian.com)、小蓝本、豌豆荚查名称</a></p>
+<p>2、七麦( <a target="_blank" rel="noopener" href="https://qimai.cn/">https://qimai.cn</a> )、点点( <a target="_blank" rel="noopener" href="https://app.diandian.com/">https://app.diandian.com</a> )、小蓝本、豌豆荚查名称</p>
 <h3 id="URL网站备案获取"><a href="#URL网站备案获取" class="headerlink" title="URL网站备案获取"></a>URL网站备案获取</h3><p>1、备案信息查询</p>
 <p>2、网站上有APP下载</p>
 <p>3、应用市场直接搜单位名称</p>
@@ -645,7 +645,7 @@
 <p>那也不一定，因为APP可能会对这些网址进行加密处理，一般的静态分析工具通过正则不一定可以匹配的到</p>
 <p>这是一个动态分析的过程，但是我们在模拟器中抓包，肯定是抓不全的，和代理证书有关，不过可以借助下面的MobSF平台来实现动态调试</p>
 <h3 id="提取"><a href="#提取" class="headerlink" title="提取"></a>提取</h3><p>使用一些工具和在线的平台</p>
-<p>MobSF(自己手动搭建，可以动态和静态分析，推荐，<a target="_blank" rel="noopener" href="https://github.com/MobSF/Mobile-Security-Framework-MobSF)%E3%80%81AppInfoScanner(https://github.com/kelvinBen/AppInfoScanner%EF%BC%8C%E6%8E%A8%E8%8D%90)">https://github.com/MobSF/Mobile-Security-Framework-MobSF)、AppInfoScanner(https://github.com/kelvinBen/AppInfoScanner，推荐)</a> </p>
+<p>MobSF(自己手动搭建，可以动态和静态分析，推荐，<a target="_blank" rel="noopener" href="https://github.com/MobSF/Mobile-Security-Framework-MobSF">https://github.com/MobSF/Mobile-Security-Framework-MobSF</a> )、AppInfoScanner( <a target="_blank" rel="noopener" href="https://github.com/kelvinBen/AppInfoScanner">https://github.com/kelvinBen/AppInfoScanner</a> ，推荐) </p>
 <p>MobSF在进行动态调试时，需要在本地安装一个模拟器，比如逍遥模拟器即可</p>
 <h1 id="小程序应用"><a href="#小程序应用" class="headerlink" title="小程序应用"></a>小程序应用</h1><h2 id="获取"><a href="#获取" class="headerlink" title="获取"></a>获取</h2><p>在各大平台（微信、支付宝等）搜索</p>
 <h2 id="小程序抓包"><a href="#小程序抓包" class="headerlink" title="小程序抓包"></a>小程序抓包</h2><p>在基础篇提到过，就是burp和proxifier的联动</p>
@@ -660,21 +660,21 @@
 <p>这个工具在反编译小程序分两部分，选择解包文件和刷新反编译包，解包文件地址为小程序的目录地址，在电脑端的微信点击微信—文件管理，打开文件路径后回到它的上一级，选择Applet文件夹，可以把所有文件夹删掉，然后访问一下你想逆向的小程序，这个目录下面就会出现这个小程序的文件夹，这个就是你要解包的文件地址，选择里面的 .wxapkg文件即可，如果有多个.wxapkg文件，全选即可，不过要将__APP__.wxapkg放在第一个，解包后点击刷新反编译包即可，之后在操作区点击新版反编译，然后就可以在指定目录看到结果</p>
 <p>之后使用微信官方的微信开发者工具，将刚刚反编译后的源码导入，即可进行调试，如果js加载有保存导致页面无法正常显示，可以在右上角的详情—本地设置—将JS编译成ESS的勾选给去掉，即可，将可视化打开，通过点击右侧的代码文件，左侧的可视化界面就会随之跳转</p>
 <p>之后我们就可以先简单测试一下未授权访问之类的信息，比如小程序需要先登录，但是我们本地打开后访问一些文件，成功了就是未授权，或者在源码里搜索Accesskey之类的关键字，后面会详细讲解</p>
-<h1 id="公开平台"><a href="#公开平台" class="headerlink" title="公开平台"></a>公开平台</h1><h2 id="微信公众号"><a href="#微信公众号" class="headerlink" title="微信公众号"></a>微信公众号</h2><h3 id="获取-1"><a href="#获取-1" class="headerlink" title="获取"></a>获取</h3><p><a target="_blank" rel="noopener" href="https://weixin.sogou.com,查询成功后看下有无第三方服务/">https://weixin.sogou.com，查询成功后看下有无第三方服务</a></p>
+<h1 id="公开平台"><a href="#公开平台" class="headerlink" title="公开平台"></a>公开平台</h1><h2 id="微信公众号"><a href="#微信公众号" class="headerlink" title="微信公众号"></a>微信公众号</h2><h3 id="获取-1"><a href="#获取-1" class="headerlink" title="获取"></a>获取</h3><p><a target="_blank" rel="noopener" href="https://weixin.sogou.com/">https://weixin.sogou.com</a> ，查询成功后看下有无第三方服务</p>
 <h2 id="Github"><a href="#Github" class="headerlink" title="Github"></a>Github</h2><h3 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h3><p>人员、域名、邮箱等筛选，如xxx.cn password in:file</p>
 <p>更多搜索规则可以自行查阅</p>
 <p>关键字配合谷歌搜索：</p>
 <p>site:Github.com smtp @qq.com</p>
 <p>site:Github.com smtp password</p>
 <p>site:Github.com String password smtp</p>
-<h3 id="长期监控"><a href="#长期监控" class="headerlink" title="长期监控"></a>长期监控</h3><p><a target="_blank" rel="noopener" href="https://github.com/madneal/gshark%EF%BC%8Chttps://github.com/Explorer1092/Github-Monitor">https://github.com/madneal/gshark，https://github.com/Explorer1092/Github-Monitor</a></p>
+<h3 id="长期监控"><a href="#长期监控" class="headerlink" title="长期监控"></a>长期监控</h3><p><a target="_blank" rel="noopener" href="https://github.com/madneal/gshark">https://github.com/madneal/gshark</a> ，<a target="_blank" rel="noopener" href="https://github.com/Explorer1092/Github-Monitor">https://github.com/Explorer1092/Github-Monitor</a></p>
 <h2 id="网盘搜索"><a href="#网盘搜索" class="headerlink" title="网盘搜索"></a>网盘搜索</h2><p>可以在百度网盘之类的直接搜索，也可以找一些接口</p>
 <h2 id="邮箱搜集"><a href="#邮箱搜集" class="headerlink" title="邮箱搜集"></a>邮箱搜集</h2><p><a target="_blank" rel="noopener" href="https://hunter.io/">https://hunter.io/</a></p>
 <h1 id="信息搜集–工具集合"><a href="#信息搜集–工具集合" class="headerlink" title="信息搜集–工具集合"></a>信息搜集–工具集合</h1><p>先推荐个地址：<a target="_blank" rel="noopener" href="https://github.com/guchangan1/All-Defense-Tool">https://github.com/guchangan1/All-Defense-Tool</a></p>
-<h2 id="F8x"><a href="#F8x" class="headerlink" title="F8x"></a>F8x</h2><p><a target="_blank" rel="noopener" href="https://github.com/ffffffff0x/f8x%EF%BC%8C%E4%B8%80%E6%AC%BE%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2%E5%B7%A5%E5%85%B7">https://github.com/ffffffff0x/f8x，一款自动化部署工具</a></p>
+<h2 id="F8x"><a href="#F8x" class="headerlink" title="F8x"></a>F8x</h2><p><a target="_blank" rel="noopener" href="https://github.com/ffffffff0x/f8x">https://github.com/ffffffff0x/f8x</a> ，一款自动化部署工具</p>
 <h2 id="ENScan"><a href="#ENScan" class="headerlink" title="ENScan"></a>ENScan</h2><p>针对于企业信息查询，在配置文件中自己配置一些cookie和token即可</p>
 <h2 id="AsamF"><a href="#AsamF" class="headerlink" title="AsamF"></a>AsamF</h2><p>集成了fofa、hunter、quake、zoomeye等平台，只需要在配置文件中把key配置好即可使用，优点就是hunter和quake导出是要花费积分的，使用这个工具可以免费导出，配置key的作用在于你的查询权限，如果你在平台上只能查询第一页，那就只能导出第一页</p>
-<h2 id="ARL灯塔"><a href="#ARL灯塔" class="headerlink" title="ARL灯塔"></a>ARL灯塔</h2><p><a target="_blank" rel="noopener" href="https://github.com/TophantTechnology/ARL%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%90%9C%E4%B8%80%E4%B8%8BARL%E9%AD%94%E6%94%B9%E7%89%88%E7%9A%84%E6%90%AD%E5%BB%BA%EF%BC%8C%E6%8A%8A%E6%8C%87%E7%BA%B9%E5%BA%93%E4%B9%8B%E7%B1%BB%E7%9A%84%E5%8A%A0%E4%BA%86%E8%BF%9B%E5%8E%BB">https://github.com/TophantTechnology/ARL，可以搜一下ARL魔改版的搭建，把指纹库之类的加了进去</a></p>
+<h2 id="ARL灯塔"><a href="#ARL灯塔" class="headerlink" title="ARL灯塔"></a>ARL灯塔</h2><p><a target="_blank" rel="noopener" href="https://github.com/TophantTechnology/ARL">https://github.com/TophantTechnology/ARL</a> ，可以搜一下ARL魔改版的搭建，把指纹库之类的加了进去</p>
 <h2 id="Nemo"><a href="#Nemo" class="headerlink" title="Nemo"></a>Nemo</h2><p><a target="_blank" rel="noopener" href="https://github.com/hanc00l/nemo_go">https://github.com/hanc00l/nemo_go</a> </p>
 
       

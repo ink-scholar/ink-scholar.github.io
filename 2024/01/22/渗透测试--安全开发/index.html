@@ -27,7 +27,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ink-scholar.github.io/2024/01/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91/image-20240128200429517.png">
 <meta property="article:published_time" content="2024-01-22T13:55:33.707Z">
-<meta property="article:modified_time" content="2024-02-04T08:56:01.866Z">
+<meta property="article:modified_time" content="2024-02-04T08:59:06.061Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="WEB">
 <meta property="article:tag" content="开发">
@@ -527,7 +527,7 @@
 <p>当前，前端页面也可以写变量，类似于Smarty的写法，这是index.php中通过如下方式来替换index.html中的 {$name} 和 {$email}</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">assign</span>([<span class="string">&#x27;name&#x27;</span>=&gt;<span class="string">&#x27;TP&#x27;</span>,<span class="string">&#x27;email&#x27;</span>=&gt;<span class="string">&#x27;aaa@qq.com&#x27;</span>]);</span><br><span class="line"><span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">fetch</span>();</span><br></pre></td></tr></table></figure>
 
-<h1 id="JS原生类"><a href="#JS原生类" class="headerlink" title="JS原生类"></a>JS原生类</h1><h2 id="原生开发"><a href="#原生开发" class="headerlink" title="原生开发"></a>原生开发</h2><p>比如我们这里写一个文件上传的代码，js代码必须写在 <strong><script></script></strong> 两个之间</p>
+<h1 id="JS原生类"><a href="#JS原生类" class="headerlink" title="JS原生类"></a>JS原生类</h1><h2 id="原生开发"><a href="#原生开发" class="headerlink" title="原生开发"></a>原生开发</h2><p>比如我们这里写一个文件上传的代码，js代码必须写在 script 两个之间</p>
 <p>当需要调用js文件进行一个文件上传的后缀过滤时，在前端需要使用onchange事件</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">onchange</span>=<span class="string">&quot;myFunction()&quot;</span>&gt;</span>  // 当用户改变input输入框内容时执行一段javascript代码</span><br></pre></td></tr></table></figure>
 
@@ -543,7 +543,10 @@
 <p>后端的验证</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$user</span>=<span class="variable">$_POST</span>[<span class="string">&#x27;myuser&#x27;</span>];</span><br><span class="line"><span class="variable">$pass</span>=<span class="variable">$_POST</span>[<span class="string">&#x27;mypass&#x27;</span>];</span><br><span class="line"><span class="comment">//真实情况需要在数据库获取</span></span><br><span class="line"><span class="variable">$success</span>=<span class="keyword">array</span>(<span class="string">&#x27;msg&#x27;</span>=&gt;<span class="string">&#x27;ok&#x27;</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$user</span>==<span class="string">&#x27;admin&#x27;</span> &amp;&amp; <span class="variable">$pass</span>==<span class="string">&#x27;123456&#x27;</span>)&#123;</span><br><span class="line">    <span class="variable">$success</span>[<span class="string">&#x27;infoCode&#x27;</span>]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&#x27;&lt;script&gt;location.href=&quot;index.php&quot;;&lt;/script&gt;&#x27;</span>;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="variable">$success</span>[<span class="string">&#x27;infoCode&#x27;</span>]=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">json_encode</span>(<span class="variable">$success</span>);</span><br></pre></td></tr></table></figure>
 
-<p>注意，如果将 echo ‘<script>location.href="index.php";</script>‘; 这一段写在js里面，会导致安全问题，直接抓返回包将值改为1就可以跳转</p>
+<p>注意，如果将 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &#x27;&lt;script&gt;location.href=&quot;index.php&quot;;&lt;/script&gt;&#x27;; </span><br></pre></td></tr></table></figure>
+
+<p>这一段写在js里面，会导致安全问题，直接抓返回包将值改为1就可以跳转</p>
 <h1 id="JS框架类"><a href="#JS框架类" class="headerlink" title="JS框架类"></a>JS框架类</h1><h1 id="JAVA"><a href="#JAVA" class="headerlink" title="JAVA"></a>JAVA</h1>
       
     </div>

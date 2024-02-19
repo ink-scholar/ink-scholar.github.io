@@ -17,23 +17,23 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>SRC通用讲解 | ink&#39;s blog</title>
-  <meta name="description" content="此篇主要讲解src挖掘过程中的通用技巧，已方法为主，帮助快速刷src，赚点赏金 信息收集网络空间搜索精准搜索域名搜索Fofa：domain&#x3D;“baidu.com” Hunter：domain.suffix&#x3D;”Baidu.com” Google：site:baidu.com 域名解析微步：https:&#x2F;&#x2F;x.threatbook.com&#x2F; 360：https:&#x2F;&#x2F;ti.360.c">
+  <title>渗透测试--WEB攻防(下) | ink&#39;s blog</title>
+  <meta name="description" content="此篇主要写一些常规漏洞方面的知识，从不同的漏洞类型讲解 文件&#x2F;目录安全在文件下载中，常规下载URL：http:&#x2F;&#x2F;xxxxx&#x2F;upload&#x2F;123.pdf ， 可能存在安全问题URL：http:&#x2F;&#x2F;xxxxxx&#x2F;xx.xx?file&#x3D;123.pdf 第一种常规下载除了下载之外更常见的是解析文件，而第二种通常就是下载，如果有任意文件下载漏洞，可以下载一些敏感文件（数据库配置，中间件配置，系">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SRC通用讲解">
-<meta property="og:url" content="https://ink-scholar.github.io/2023/11/24/SRC%E9%80%9A%E7%94%A8%E8%AE%B2%E8%A7%A3/index.html">
+<meta property="og:title" content="渗透测试--WEB攻防(下)">
+<meta property="og:url" content="https://ink-scholar.github.io/2024/02/19/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8B)/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="此篇主要讲解src挖掘过程中的通用技巧，已方法为主，帮助快速刷src，赚点赏金 信息收集网络空间搜索精准搜索域名搜索Fofa：domain&#x3D;“baidu.com” Hunter：domain.suffix&#x3D;”Baidu.com” Google：site:baidu.com 域名解析微步：https:&#x2F;&#x2F;x.threatbook.com&#x2F; 360：https:&#x2F;&#x2F;ti.360.c">
+<meta property="og:description" content="此篇主要写一些常规漏洞方面的知识，从不同的漏洞类型讲解 文件&#x2F;目录安全在文件下载中，常规下载URL：http:&#x2F;&#x2F;xxxxx&#x2F;upload&#x2F;123.pdf ， 可能存在安全问题URL：http:&#x2F;&#x2F;xxxxxx&#x2F;xx.xx?file&#x3D;123.pdf 第一种常规下载除了下载之外更常见的是解析文件，而第二种通常就是下载，如果有任意文件下载漏洞，可以下载一些敏感文件（数据库配置，中间件配置，系">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://ink-scholar.github.io/2023/11/24/SRC%E9%80%9A%E7%94%A8%E8%AE%B2%E8%A7%A3/image-20231206224628687.png">
-<meta property="article:published_time" content="2023-11-24T13:12:12.413Z">
-<meta property="article:modified_time" content="2023-12-06T15:42:58.179Z">
+<meta property="article:published_time" content="2024-02-19T14:41:45.562Z">
+<meta property="article:modified_time" content="2024-02-19T16:34:06.956Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="src">
+<meta property="article:tag" content="攻防">
+<meta property="article:tag" content="WEB">
+<meta property="article:tag" content="漏洞">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ink-scholar.github.io/2023/11/24/SRC%E9%80%9A%E7%94%A8%E8%AE%B2%E8%A7%A3/image-20231206224628687.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://ink-scholar.github.io/2023/11/24/SRC%E9%80%9A%E7%94%A8%E8%AE%B2%E8%A7%A3/index.html">
+  <link rel="canonical" href="https://ink-scholar.github.io/2024/02/19/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8B)/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -354,21 +354,21 @@
   <div class="slimContent">
     <nav id="toc" class="article-toc">
       <h3 class="toc-title">Catalogue</h3>
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.</span> <span class="toc-text">信息收集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E6%90%9C%E7%B4%A2"><span class="toc-number">1.1.</span> <span class="toc-text">网络空间搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B2%BE%E5%87%86%E6%90%9C%E7%B4%A2"><span class="toc-number">1.1.1.</span> <span class="toc-text">精准搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E6%90%9C%E7%B4%A2"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">域名搜索</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">域名解析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%90%E5%9F%9F%E5%90%8D%E5%B7%A5%E5%85%B7"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">子域名工具</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%81%E4%B8%9A%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">企业查询</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E7%B3%8A%E6%90%9C%E7%B4%A2"><span class="toc-number">1.1.2.</span> <span class="toc-text">模糊搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">通用方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%AD%E8%A7%86%E9%A2%91%E4%BF%A1%E6%81%AF%E6%90%9C%E7%B4%A2"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">短视频信息搜索</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%AD%E9%9B%80%E6%90%9C%E7%B4%A2"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">语雀搜索</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.2.</span> <span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%B1%E5%8F%A3%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">弱口令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89%EF%BC%88%E5%B9%B6%E5%8F%91%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">条件竞争（并发）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B6%8A%E6%9D%83"><span class="toc-number">4.</span> <span class="toc-text">越权</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CORS%E2%9E%95XSS"><span class="toc-number">5.</span> <span class="toc-text">CORS➕XSS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%AA%E6%8E%88%E6%9D%83"><span class="toc-number">6.</span> <span class="toc-text">未授权</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SSRF%E2%9E%95RCE"><span class="toc-number">7.</span> <span class="toc-text">SSRF➕RCE</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E"><span class="toc-number">8.</span> <span class="toc-text">逻辑漏洞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%91%E5%AE%89%E5%85%A8"><span class="toc-number">9.</span> <span class="toc-text">云安全</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%A1%86%E6%9E%B6%E6%BC%8F%E6%B4%9E"><span class="toc-number">10.</span> <span class="toc-text">常见框架漏洞</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6-%E7%9B%AE%E5%BD%95%E5%AE%89%E5%85%A8"><span class="toc-number">1.</span> <span class="toc-text">文件&#x2F;目录安全</span></a></li></ol>
     </nav>
   </div>
 </aside>
 
 <main class="main" role="main">
   <div class="content">
-  <article id="post-SRC通用讲解" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-渗透测试--WEB攻防(下)" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      SRC通用讲解
+      渗透测试--WEB攻防(下)
     </h1>
   
 
@@ -376,20 +376,20 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2023/11/24/SRC%E9%80%9A%E7%94%A8%E8%AE%B2%E8%A7%A3/" class="article-date">
-	  <time datetime="2023-11-24T13:12:12.413Z" itemprop="datePublished">2023-11-24</time>
+	<a href="/2024/02/19/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8B)/" class="article-date">
+	  <time datetime="2024-02-19T14:41:45.562Z" itemprop="datePublished">2024-02-19</time>
 	</a>
 </span>
         
   <span class="article-category">
     <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/SRC/">SRC</a>
+    <a class="article-category-link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
   </span>
 
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/src/" rel="tag">src</a>
+	<a class="article-tag-link-link" href="/tags/WEB/" rel="tag">WEB</a>, <a class="article-tag-link-link" href="/tags/%E6%94%BB%E9%98%B2/" rel="tag">攻防</a>, <a class="article-tag-link-link" href="/tags/%E6%BC%8F%E6%B4%9E/" rel="tag">漏洞</a>
   </span>
 
 
@@ -402,39 +402,21 @@
 	</span>
 
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2023/11/24/SRC%E9%80%9A%E7%94%A8%E8%AE%B2%E8%A7%A3/#comments" class="article-comment-link">Comments</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2024/02/19/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8B)/#comments" class="article-comment-link">Comments</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p><em><strong>此篇主要讲解src挖掘过程中的通用技巧，已方法为主，帮助快速刷src，赚点赏金</strong></em></p>
-<h1 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h1><h2 id="网络空间搜索"><a href="#网络空间搜索" class="headerlink" title="网络空间搜索"></a>网络空间搜索</h2><h3 id="精准搜索"><a href="#精准搜索" class="headerlink" title="精准搜索"></a>精准搜索</h3><h4 id="域名搜索"><a href="#域名搜索" class="headerlink" title="域名搜索"></a>域名搜索</h4><p>Fofa：domain&#x3D;“baidu.com”</p>
-<p>Hunter：domain.suffix&#x3D;”Baidu.com”</p>
-<p>Google：site:baidu.com</p>
-<h4 id="域名解析"><a href="#域名解析" class="headerlink" title="域名解析"></a>域名解析</h4><p>微步：<a target="_blank" rel="noopener" href="https://x.threatbook.com/">https://x.threatbook.com/</a></p>
-<p>360：<a target="_blank" rel="noopener" href="https://ti.360.cn/">https://ti.360.cn/</a></p>
-<p>旁站查询：<a target="_blank" rel="noopener" href="https://webscan.cc/">https://webscan.cc</a>         （对于IP站更好一点）</p>
-<h4 id="子域名工具"><a href="#子域名工具" class="headerlink" title="子域名工具"></a>子域名工具</h4><p>水泽：<a target="_blank" rel="noopener" href="https://github.com/0x727/ShuiZe_0x727">https://github.com/0x727/ShuiZe_0x727</a></p>
-<p>灯塔魔改版：<a target="_blank" rel="noopener" href="https://github.com/ki9mu/ARL-plus-docker">https://github.com/ki9mu/ARL-plus-docker</a></p>
-<p>Nemo：<a target="_blank" rel="noopener" href="https://github.com/hanc00l/nemo_go">https://github.com/hanc00l/nemo_go</a></p>
-<p>推荐灯塔魔改版</p>
-<h4 id="企业查询"><a href="#企业查询" class="headerlink" title="企业查询"></a>企业查询</h4><p>小蓝本、企查查、爱企查、微信小程序、公众号</p>
-<h3 id="模糊搜索"><a href="#模糊搜索" class="headerlink" title="模糊搜索"></a>模糊搜索</h3><h4 id="通用方法"><a href="#通用方法" class="headerlink" title="通用方法"></a>通用方法</h4><p>Github关键字搜索</p>
-<p>网络空间搜索引擎body，title，ico特征，js特征搜索</p>
-<p>通用系统搜索</p>
-<p>CNVD通用搜索</p>
-<p>EDU通用搜索</p>
-<h4 id="短视频信息搜索"><a href="#短视频信息搜索" class="headerlink" title="短视频信息搜索"></a>短视频信息搜索</h4><p>抖音快手B站等，直接搜索内容，如：腾讯后台登录教程，可以看到一些url甚至是账号密码</p>
-<h4 id="语雀搜索"><a href="#语雀搜索" class="headerlink" title="语雀搜索"></a>语雀搜索</h4><p> 语雀搜索是需要登录的，登录后可以进入页面 <a target="_blank" rel="noopener" href="https://www.yuque.com/dashboard">https://www.yuque.com/dashboard</a> ，左上角会存在搜索</p>
-<p>当然登陆客户端也有</p>
-<img src="/2023/11/24/SRC%E9%80%9A%E7%94%A8%E8%AE%B2%E8%A7%A3/image-20231206224628687.png" alt="image-20231206224628687" style="zoom: 33%;">
+        <p><em><strong>此篇主要写一些常规漏洞方面的知识，从不同的漏洞类型讲解</strong></em></p>
+<h1 id="文件-目录安全"><a href="#文件-目录安全" class="headerlink" title="文件&#x2F;目录安全"></a>文件&#x2F;目录安全</h1><p>在文件下载中，常规下载URL：<a target="_blank" rel="noopener" href="http://xxxxx/upload/123.pdf">http://xxxxx/upload/123.pdf</a> ， 可能存在安全问题URL：<a target="_blank" rel="noopener" href="http://xxxxxx/xx.xx?file=123.pdf">http://xxxxxx/xx.xx?file=123.pdf</a></p>
+<p>第一种常规下载除了下载之外更常见的是解析文件，而第二种通常就是下载，如果有任意文件下载漏洞，可以下载一些敏感文件（数据库配置，中间件配置，系统密匙等文件信息），通过 ..&#x2F; 跳转，除了任意文件下载还有任意文件读取，方法是一模一样的</p>
+<p>除此之外还有文件删除，不过最好别测，方法是一样的</p>
+<p>关于目录的安全问题主要有目录遍历和目录穿越</p>
+<p>目录遍历就是看到一些目录结构和内容，一般是权限分配不当造成的，为什么有些地方可以遍历而有些地方不行？是因为不行的地方存在诸如index.php这样的索引文件，所以你访问目录的时候优先访问到index</p>
+<p>目录穿越就是通过 ..&#x2F; 跳转，跳到其他目录，比如跳到根目录这种</p>
+<p>黑盒分析可以通过以下几点：<br>1、功能点<br>文件上传，文件下载，文件删除，文件管理器等地方<br>2、URL 特征–文件名<br>download，down，readfile，read，del，dir，path，src，Lang 等<br>3、参数名<br>file、path、data、filepath、readfile、data、url、realpath 等<br>白盒分析可以看一些函数特征：<br>上传类函数，删除类函数，下载类函数，目录操作函数，读取查看函数等</p>
 
-
-
-
-
-<h2 id><a href="#" class="headerlink" title></a></h2><h1 id="弱口令"><a href="#弱口令" class="headerlink" title="弱口令"></a>弱口令</h1><h1 id="条件竞争（并发）"><a href="#条件竞争（并发）" class="headerlink" title="条件竞争（并发）"></a>条件竞争（并发）</h1><h1 id="越权"><a href="#越权" class="headerlink" title="越权"></a>越权</h1><h1 id="CORS➕XSS"><a href="#CORS➕XSS" class="headerlink" title="CORS➕XSS"></a>CORS➕XSS</h1><h1 id="未授权"><a href="#未授权" class="headerlink" title="未授权"></a>未授权</h1><h1 id="SSRF➕RCE"><a href="#SSRF➕RCE" class="headerlink" title="SSRF➕RCE"></a>SSRF➕RCE</h1><h1 id="逻辑漏洞"><a href="#逻辑漏洞" class="headerlink" title="逻辑漏洞"></a>逻辑漏洞</h1><h1 id="云安全"><a href="#云安全" class="headerlink" title="云安全"></a>云安全</h1><h1 id="常见框架漏洞"><a href="#常见框架漏洞" class="headerlink" title="常见框架漏洞"></a>常见框架漏洞</h1>
       
     </div>
     <div class="article-footer">
@@ -443,7 +425,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://ink-scholar.github.io/2023/11/24/SRC%E9%80%9A%E7%94%A8%E8%AE%B2%E8%A7%A3/" title="SRC通用讲解" target="_blank" rel="external">https://ink-scholar.github.io/2023/11/24/SRC通用讲解/</a>
+      <a href="https://ink-scholar.github.io/2024/02/19/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8B)/" title="渗透测试--WEB攻防(下)" target="_blank" rel="external">https://ink-scholar.github.io/2024/02/19/渗透测试--WEB攻防(下)/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -489,10 +471,10 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2023/12/14/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8/" title="渗透测试--基础入门"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;Newer</span></a>
-    </li>
     
+    <li class="next">
+      <a href="/2024/02/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95--WEB%E6%94%BB%E9%98%B2(%E4%B8%8A)/" title="渗透测试--WEB攻防(上)"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
     
     
     <li class="toggle-toc">
